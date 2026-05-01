@@ -47,10 +47,10 @@ CUSTOMIZATION:
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zoku All-Hands — May 2026</title>
+  <title>Zoku All-Hands - May 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Pacifico&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <style>
     /* ============================================================
@@ -59,21 +59,40 @@ CUSTOMIZATION:
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg-primary: #0f0f1e;
-      --bg-secondary: #1a1a2e;
-      --bg-card: rgba(255, 255, 255, 0.05);
+      --brand-primary: #199999;
+      --brand-logo: #1598A7;
+      --brand-bright: #18D6CC;
+      --brand-frost: #DEF9F9;
+      --brand-mist: #EFFFFF;
+      --gray-light: #F5F5F5;
+      --gray-medium: #CCCCCC;
+      --gray-dark: #666666;
+      --status-success: #4CAF50;
+      --status-error: #F44336;
+      --status-warning: #FFC107;
+      --status-info: #2196F3;
 
-      --gradient-purple: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      --gradient-pink:   linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      --gradient-blue:   linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      --gradient-green:  linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-      --gradient-sunset: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-      --gradient-ocean:  linear-gradient(135deg, #30cfd0 0%, #330867 100%);
-      --gradient-soft:   linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+      --bg-primary: var(--brand-mist);
+      --bg-secondary: #f8ffff;
+      --bg-card: rgba(255, 255, 255, 0.84);
 
-      --text-primary:   #ffffff;
-      --text-secondary: rgba(255, 255, 255, 0.7);
-      --text-tertiary:  rgba(255, 255, 255, 0.5);
+      --gradient-purple: linear-gradient(135deg, #199999 0%, #18D6CC 100%);
+      --gradient-pink:   linear-gradient(135deg, #18D6CC 0%, #199999 100%);
+      --gradient-blue:   linear-gradient(135deg, #199999 0%, #18D6CC 56%, #199999 100%);
+      --gradient-green:  linear-gradient(135deg, #18D6CC 0%, #199999 100%);
+      --gradient-sunset: linear-gradient(135deg, #199999 0%, #18D6CC 48%, #199999 100%);
+      --gradient-ocean:  linear-gradient(135deg, #199999 0%, #18D6CC 100%);
+      --gradient-soft:   linear-gradient(135deg, #199999 0%, #18D6CC 85%);
+      --gradient-info: linear-gradient(135deg, #7cc4ff 0%, #2196F3 100%);
+      --gradient-success: linear-gradient(135deg, #8ad38d 0%, #4CAF50 100%);
+      --gradient-warning: linear-gradient(135deg, #ffd766 0%, #ffb300 100%);
+      --gradient-error: linear-gradient(135deg, #ff9a91 0%, #F44336 100%);
+
+      --text-primary:   #000000;
+      --text-secondary: #666666;
+      --text-tertiary:  rgba(0, 0, 0, 0.52);
+      --border-soft: rgba(25, 153, 153, 0.14);
+      --shadow-soft: rgba(25, 153, 153, 0.14);
 
       --text-hero:     72px;
       --text-title:    48px;
@@ -87,7 +106,7 @@ CUSTOMIZATION:
     html, body {
       width: 100%; height: 100%;
       overflow: hidden;
-      background: var(--bg-primary);
+      background: linear-gradient(180deg, #f9ffff 0%, var(--bg-primary) 100%);
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       color: var(--text-primary);
       user-select: none;
@@ -123,7 +142,7 @@ CUSTOMIZATION:
       align-items: center;
       justify-content: center;
       padding: 60px 80px;
-      background: var(--bg-primary);
+      background: linear-gradient(180deg, #f9ffff 0%, var(--bg-primary) 100%);
     }
 
     /* ============================================================
@@ -131,11 +150,11 @@ CUSTOMIZATION:
     ============================================================ */
     .glass-card {
       background: var(--bg-card);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--border-soft);
       border-radius: 20px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 18px 48px var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.72);
       padding: 28px 32px;
     }
 
@@ -145,8 +164,8 @@ CUSTOMIZATION:
     .orb {
       position: absolute;
       border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.25;
+      filter: blur(95px);
+      opacity: 0.18;
       pointer-events: none;
       z-index: 0;
     }
@@ -161,17 +180,17 @@ CUSTOMIZATION:
       right: 0;
       z-index: 100;
       height: 3px;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(25, 153, 153, 0.12);
       cursor: pointer;
     }
 
     #progress-fill {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, #667eea, #f093fb, #4facfe);
+      background: linear-gradient(90deg, #199999, #18D6CC, #199999);
       background-size: 200% 100%;
       transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 0 8px rgba(102, 126, 234, 0.6);
+      box-shadow: 0 0 10px rgba(24, 214, 204, 0.35);
     }
 
     /* ============================================================
@@ -188,6 +207,39 @@ CUSTOMIZATION:
       pointer-events: none;
     }
 
+    #dot-nav {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 100;
+    }
+
+    .dot-button {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 1px solid rgba(25, 153, 153, 0.25);
+      background: rgba(25, 153, 153, 0.12);
+      cursor: pointer;
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+    }
+
+    .dot-button:hover {
+      transform: scale(1.12);
+      background: rgba(24, 214, 204, 0.22);
+    }
+
+    .dot-button.active {
+      background: var(--brand-primary);
+      border-color: var(--brand-primary);
+      transform: scale(1.18);
+      box-shadow: 0 0 14px rgba(25, 153, 153, 0.22);
+    }
+
     /* ============================================================
        UTILITY: GRADIENT TEXT
     ============================================================ */
@@ -197,15 +249,179 @@ CUSTOMIZATION:
     .grad-green  { background: var(--gradient-green);  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .grad-sunset { background: var(--gradient-sunset); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .grad-soft   { background: var(--gradient-soft);   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .grad-info   { background: var(--gradient-info);   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .grad-success{ background: var(--gradient-success);-webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .grad-warning{ background: var(--gradient-warning);-webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .grad-error  { background: var(--gradient-error);  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    .accent-brand,
+    .accent-info,
+    .accent-success,
+    .accent-warning,
+    .accent-error {
+      --accent-ink: var(--brand-primary);
+      --accent-soft: rgba(25, 153, 153, 0.12);
+      --accent-line: rgba(25, 153, 153, 0.18);
+      --accent-haze: rgba(25, 153, 153, 0.08);
+      --accent-gradient: linear-gradient(135deg, var(--brand-bright), var(--brand-primary));
+    }
+
+    .accent-info {
+      --accent-ink: var(--status-info);
+      --accent-soft: rgba(33, 150, 243, 0.12);
+      --accent-line: rgba(33, 150, 243, 0.22);
+      --accent-haze: rgba(33, 150, 243, 0.10);
+      --accent-gradient: linear-gradient(135deg, #7cc4ff, var(--status-info));
+    }
+
+    .accent-success {
+      --accent-ink: var(--status-success);
+      --accent-soft: rgba(76, 175, 80, 0.12);
+      --accent-line: rgba(76, 175, 80, 0.22);
+      --accent-haze: rgba(76, 175, 80, 0.10);
+      --accent-gradient: linear-gradient(135deg, #8ad38d, var(--status-success));
+    }
+
+    .accent-warning {
+      --accent-ink: #9a7100;
+      --accent-soft: rgba(255, 193, 7, 0.16);
+      --accent-line: rgba(255, 193, 7, 0.24);
+      --accent-haze: rgba(255, 193, 7, 0.10);
+      --accent-gradient: linear-gradient(135deg, #ffd766, var(--status-warning));
+    }
+
+    .accent-error {
+      --accent-ink: #d63c31;
+      --accent-soft: rgba(244, 67, 54, 0.12);
+      --accent-line: rgba(244, 67, 54, 0.22);
+      --accent-haze: rgba(244, 67, 54, 0.10);
+      --accent-gradient: linear-gradient(135deg, #ff9a91, var(--status-error));
+    }
+
+    .glass-card[class*="accent-"] {
+      border-color: var(--accent-line);
+      box-shadow:
+        0 18px 48px var(--shadow-soft),
+        0 12px 28px var(--accent-haze),
+        inset 0 1px 0 rgba(255, 255, 255, 0.72);
+    }
+
+    .metric-card[class*="accent-"],
+    .milestone-card[class*="accent-"],
+    .team-section-card[class*="accent-"],
+    .status-row[class*="accent-"],
+    .priority-item[class*="accent-"] {
+      border-top: 4px solid var(--accent-line);
+    }
+
+    .metric-card[class*="accent-"] .metric-icon,
+    .milestone-card[class*="accent-"] .milestone-check,
+    .team-section-card[class*="accent-"] .team-section-icon {
+      background: var(--accent-soft) !important;
+      border-color: var(--accent-line);
+    }
+
+    .metric-card[class*="accent-"] .metric-title,
+    .team-section-card[class*="accent-"] .team-section-title,
+    .status-row[class*="accent-"] .status-team-name,
+    .priority-item[class*="accent-"] .priority-title {
+      color: var(--accent-ink);
+    }
+
+    .metric-card[class*="accent-"] .metric-title {
+      background: none !important;
+      -webkit-text-fill-color: currentColor !important;
+      -webkit-background-clip: border-box !important;
+      background-clip: border-box !important;
+    }
+
+    .milestone-card[class*="accent-"] .milestone-tag,
+    .status-row[class*="accent-"] .status-badge,
+    .priority-item[class*="accent-"] .priority-num {
+      background: var(--accent-soft) !important;
+      color: var(--accent-ink) !important;
+      border-color: var(--accent-line) !important;
+      box-shadow: inset 0 0 0 1px var(--accent-line);
+    }
+
+    .status-row[class*="accent-"] .progress-bar {
+      background: var(--accent-gradient) !important;
+    }
+
+    .priority-item[class*="accent-"] .priority-arrow,
+    .status-row[class*="accent-"] .status-team-name i,
+    .metric-card[class*="accent-"] .metric-icon i,
+    .milestone-card[class*="accent-"] .milestone-check i,
+    .team-section-card[class*="accent-"] .team-section-icon i {
+      color: var(--accent-ink) !important;
+    }
+
+    .target-banner[class*="accent-"],
+    .shoutout-banner[class*="accent-"] {
+      border-color: var(--accent-line);
+      box-shadow: 0 14px 32px var(--accent-haze);
+    }
+
+    .target-banner[class*="accent-"] i,
+    .shoutout-banner[class*="accent-"] i {
+      color: var(--accent-ink) !important;
+    }
+
+    .metric-icon i,
+    .milestone-check i,
+    .team-section-icon i,
+    .status-team-name i,
+    .priority-arrow i,
+    .target-banner i,
+    .shoutout-banner i {
+      color: var(--brand-primary) !important;
+      background: none !important;
+      -webkit-text-fill-color: currentColor !important;
+    }
+
+    .accent-info .metric-icon i,
+    .accent-info .milestone-check i,
+    .accent-info .team-section-icon i,
+    .accent-info .status-team-name i,
+    .accent-info .priority-arrow i,
+    .accent-info.target-banner i,
+    .accent-info.shoutout-banner i,
+    .accent-success .metric-icon i,
+    .accent-success .milestone-check i,
+    .accent-success .team-section-icon i,
+    .accent-success .status-team-name i,
+    .accent-success .priority-arrow i,
+    .accent-success.target-banner i,
+    .accent-success.shoutout-banner i,
+    .accent-warning .metric-icon i,
+    .accent-warning .milestone-check i,
+    .accent-warning .team-section-icon i,
+    .accent-warning .status-team-name i,
+    .accent-warning .priority-arrow i,
+    .accent-warning.target-banner i,
+    .accent-warning.shoutout-banner i,
+    .accent-error .metric-icon i,
+    .accent-error .milestone-check i,
+    .accent-error .team-section-icon i,
+    .accent-error .status-team-name i,
+    .accent-error .priority-arrow i,
+    .accent-error.target-banner i,
+    .accent-error.shoutout-banner i {
+      color: var(--accent-ink) !important;
+    }
 
     /* ============================================================
        SLIDE 1 — HERO
     ============================================================ */
-    #slide-1 { background: radial-gradient(ellipse at 30% 50%, #1a1040 0%, var(--bg-primary) 60%); }
+    #slide-1 { background:
+      radial-gradient(circle at 18% 14%, rgba(24, 214, 204, 0.17), transparent 31%),
+      radial-gradient(circle at 82% 86%, rgba(25, 153, 153, 0.10), transparent 28%),
+      linear-gradient(180deg, #f9ffff 0%, var(--bg-primary) 100%);
+    }
 
-    #slide-1 .orb-1 { width: 500px; height: 500px; background: #667eea; top: -100px; left: -150px; }
-    #slide-1 .orb-2 { width: 400px; height: 400px; background: #f093fb; bottom: -80px; right: -100px; }
-    #slide-1 .orb-3 { width: 300px; height: 300px; background: #4facfe; top: 50%; left: 60%; transform: translate(-50%,-50%); opacity: 0.12; }
+    #slide-1 .orb-1 { width: 500px; height: 500px; background: var(--brand-bright); top: -100px; left: -150px; }
+    #slide-1 .orb-2 { width: 400px; height: 400px; background: var(--brand-frost); bottom: -80px; right: -100px; opacity: 0.34; }
+    #slide-1 .orb-3 { width: 300px; height: 300px; background: var(--brand-primary); top: 50%; left: 60%; transform: translate(-50%,-50%); opacity: 0.12; }
 
     .hero-content {
       position: relative; z-index: 1;
@@ -214,24 +430,66 @@ CUSTOMIZATION:
     }
 
     .hero-logo {
-      font-size: 56px;
-      font-weight: 900;
-      letter-spacing: -2px;
-      line-height: 1;
-      margin-bottom: 8px;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: min(72vw, 520px);
+      padding: 18px 30px 10px;
+      margin-bottom: 10px;
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at 20% 28%, rgba(24, 214, 204, 0.18), transparent 42%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(222, 249, 249, 0.92));
+      border: 1px solid rgba(25, 153, 153, 0.12);
+      box-shadow:
+        0 20px 48px rgba(25, 153, 153, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      overflow: hidden;
+    }
+
+    .hero-logo::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(24, 214, 204, 0.18), transparent);
+      transform: translateX(-120%);
+      animation: logo-sheen 5.4s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .hero-logo-wordmark {
+      position: relative;
+      z-index: 1;
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(74px, 10vw, 168px);
+      font-weight: 400;
+      line-height: 0.95;
+      letter-spacing: 0.5px;
+      color: var(--brand-logo);
+      transform: rotate(-2deg) skewX(-6deg);
+      text-shadow:
+        0 10px 24px rgba(21, 152, 167, 0.18),
+        0 0 1px rgba(255, 255, 255, 0.18);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    @keyframes logo-sheen {
+      0%, 65%, 100% { transform: translateX(-120%); }
+      78% { transform: translateX(120%); }
     }
 
     .hero-tagline {
       font-size: 13px;
-      font-weight: 500;
+      font-weight: 700;
       letter-spacing: 4px;
       text-transform: uppercase;
-      color: var(--text-tertiary);
+      color: var(--brand-primary);
     }
 
     .hero-divider {
       width: 80px; height: 2px;
-      background: var(--gradient-purple);
+      background: var(--gradient-blue);
       border-radius: 2px;
       margin: 4px 0;
     }
@@ -254,11 +512,11 @@ CUSTOMIZATION:
       color: var(--text-secondary);
     }
 
-    .hero-meta-item i { opacity: 0.6; }
+    .hero-meta-item i { color: var(--brand-primary); opacity: 1; }
 
     .hero-badge {
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(25,153,153,0.16);
       border-radius: 999px;
       padding: 8px 22px;
       font-size: 13px;
@@ -266,6 +524,7 @@ CUSTOMIZATION:
       color: var(--text-secondary);
       letter-spacing: 0.3px;
       margin-top: 12px;
+      box-shadow: 0 12px 30px rgba(25, 153, 153, 0.08);
     }
 
     /* ============================================================
@@ -282,7 +541,7 @@ CUSTOMIZATION:
       font-weight: 600;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: var(--text-tertiary);
+      color: var(--brand-primary);
       margin-bottom: 8px;
     }
 
@@ -302,13 +561,16 @@ CUSTOMIZATION:
     /* ============================================================
        SLIDE 2 — COMPANY UPDATES
     ============================================================ */
-    #slide-2 { background: radial-gradient(ellipse at 70% 30%, #0d2040 0%, var(--bg-primary) 65%); }
-    #slide-2 .orb-1 { width: 450px; height: 450px; background: #4facfe; top: -120px; right: -100px; }
-    #slide-2 .orb-2 { width: 350px; height: 350px; background: #43e97b; bottom: -60px; left: -80px; opacity: 0.15; }
+    #slide-2 { background:
+      radial-gradient(circle at 78% 20%, rgba(24, 214, 204, 0.14), transparent 30%),
+      linear-gradient(180deg, #f8ffff 0%, var(--bg-primary) 100%);
+    }
+    #slide-2 .orb-1 { width: 450px; height: 450px; background: var(--brand-bright); top: -120px; right: -100px; }
+    #slide-2 .orb-2 { width: 350px; height: 350px; background: var(--brand-primary); bottom: -60px; left: -80px; opacity: 0.12; }
 
     .metrics-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 20px;
       width: 100%;
       position: relative; z-index: 1;
@@ -318,11 +580,26 @@ CUSTOMIZATION:
       display: flex; flex-direction: column; align-items: flex-start; gap: 12px;
     }
 
+    .overview-card {
+      min-height: 0;
+      padding: 22px 24px;
+      gap: 14px;
+    }
+
     .metric-icon {
       width: 48px; height: 48px;
       border-radius: 14px;
       display: flex; align-items: center; justify-content: center;
       font-size: 20px;
+      background: var(--brand-frost) !important;
+      border: 1px solid rgba(25, 153, 153, 0.10);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+
+    .metric-title {
+      font-size: clamp(18px, 2vw, 28px);
+      font-weight: 800;
+      line-height: 1.15;
     }
 
     .metric-stat {
@@ -343,17 +620,29 @@ CUSTOMIZATION:
       font-weight: 600;
       padding: 3px 10px;
       border-radius: 999px;
-      background: rgba(67, 233, 123, 0.15);
-      color: #43e97b;
+      background: rgba(24, 214, 204, 0.14);
+      color: var(--brand-primary);
       margin-top: 4px;
+    }
+
+    .metric-meta {
+      margin-top: auto;
+      font-size: 11px;
+      letter-spacing: 0.9px;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      line-height: 1.4;
     }
 
     /* ============================================================
        SLIDE 3 — KEY MILESTONES
     ============================================================ */
-    #slide-3 { background: radial-gradient(ellipse at 20% 70%, #200d30 0%, var(--bg-primary) 60%); }
-    #slide-3 .orb-1 { width: 400px; height: 400px; background: #f093fb; bottom: -80px; left: -120px; }
-    #slide-3 .orb-2 { width: 300px; height: 300px; background: #667eea; top: -60px; right: -80px; opacity: 0.2; }
+    #slide-3 { background:
+      radial-gradient(circle at 18% 78%, rgba(25, 153, 153, 0.12), transparent 34%),
+      linear-gradient(180deg, #f8ffff 0%, var(--bg-primary) 100%);
+    }
+    #slide-3 .orb-1 { width: 400px; height: 400px; background: var(--brand-bright); bottom: -80px; left: -120px; }
+    #slide-3 .orb-2 { width: 300px; height: 300px; background: var(--brand-frost); top: -60px; right: -80px; opacity: 0.3; }
 
     .milestones-grid {
       display: grid;
@@ -374,6 +663,8 @@ CUSTOMIZATION:
       display: flex; align-items: center; justify-content: center;
       font-size: 16px;
       margin-top: 2px;
+      background: var(--brand-frost) !important;
+      border: 1px solid rgba(25, 153, 153, 0.10);
     }
 
     .milestone-body { flex: 1; }
@@ -399,14 +690,20 @@ CUSTOMIZATION:
       letter-spacing: 0.5px;
       padding: 3px 10px;
       border-radius: 999px;
+      background: rgba(25, 153, 153, 0.10) !important;
+      color: var(--brand-primary) !important;
+      border: 1px solid rgba(25, 153, 153, 0.10);
     }
 
     /* ============================================================
        SLIDE 4 — FRONTEND TEAM
     ============================================================ */
-    #slide-4 { background: radial-gradient(ellipse at 80% 60%, #0f1f35 0%, var(--bg-primary) 65%); }
-    #slide-4 .orb-1 { width: 400px; height: 400px; background: #4facfe; top: -80px; right: -100px; opacity: 0.18; }
-    #slide-4 .orb-2 { width: 350px; height: 350px; background: #fa709a; bottom: -100px; left: -80px; opacity: 0.15; }
+    #slide-4 { background:
+      radial-gradient(circle at 84% 24%, rgba(24, 214, 204, 0.13), transparent 32%),
+      linear-gradient(180deg, #f8ffff 0%, var(--bg-primary) 100%);
+    }
+    #slide-4 .orb-1 { width: 400px; height: 400px; background: var(--brand-bright); top: -80px; right: -100px; opacity: 0.16; }
+    #slide-4 .orb-2 { width: 350px; height: 350px; background: var(--brand-primary); bottom: -100px; left: -80px; opacity: 0.10; }
 
     .team-grid {
       display: grid;
@@ -430,6 +727,8 @@ CUSTOMIZATION:
       border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
       font-size: 14px;
+      background: var(--brand-frost) !important;
+      border: 1px solid rgba(25, 153, 153, 0.10);
     }
 
     .team-section-title {
@@ -449,7 +748,7 @@ CUSTOMIZATION:
 
     .team-list li::before {
       content: '→';
-      color: var(--text-tertiary);
+      color: var(--brand-primary);
       flex-shrink: 0;
       margin-top: 1px;
     }
@@ -457,9 +756,50 @@ CUSTOMIZATION:
     /* ============================================================
        SLIDE 5 — TIMELINE & STATUS
     ============================================================ */
-    #slide-5 { background: radial-gradient(ellipse at 50% 80%, #0a1f1a 0%, var(--bg-primary) 65%); }
-    #slide-5 .orb-1 { width: 450px; height: 450px; background: #38f9d7; bottom: -120px; right: -100px; opacity: 0.12; }
-    #slide-5 .orb-2 { width: 350px; height: 350px; background: #43e97b; top: -80px; left: -80px; opacity: 0.1; }
+    .asset-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .asset-placeholder {
+      border: 1px dashed rgba(25, 153, 153, 0.22);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 16px;
+      min-height: 110px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .asset-placeholder-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.4;
+    }
+
+    .asset-placeholder-copy {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      line-height: 1.5;
+    }
+
+    .asset-footnote {
+      margin-top: 2px;
+      font-size: 12px;
+      color: var(--text-tertiary);
+      line-height: 1.5;
+    }
+
+    #slide-5 { background:
+      radial-gradient(circle at 58% 82%, rgba(25, 153, 153, 0.12), transparent 32%),
+      linear-gradient(180deg, #f8ffff 0%, var(--bg-primary) 100%);
+    }
+    #slide-5 .orb-1 { width: 450px; height: 450px; background: var(--brand-bright); bottom: -120px; right: -100px; opacity: 0.12; }
+    #slide-5 .orb-2 { width: 350px; height: 350px; background: var(--brand-frost); top: -80px; left: -80px; opacity: 0.32; }
 
     .status-grid {
       display: flex; flex-direction: column; gap: 16px;
@@ -489,9 +829,9 @@ CUSTOMIZATION:
       letter-spacing: 0.3px;
     }
 
-    .badge-progress { background: rgba(79, 172, 254, 0.2); color: #4facfe; }
-    .badge-complete { background: rgba(67, 233, 123, 0.2); color: #43e97b; }
-    .badge-planned  { background: rgba(255,255,255,0.1);   color: var(--text-secondary); }
+    .badge-progress { background: rgba(25, 153, 153, 0.12); color: var(--brand-primary); }
+    .badge-complete { background: rgba(24, 214, 204, 0.16); color: var(--brand-primary); }
+    .badge-planned  { background: rgba(222, 249, 249, 0.95); color: var(--text-secondary); }
 
     .progress-wrap { flex: 1; display: flex; flex-direction: column; gap: 6px; }
 
@@ -502,7 +842,7 @@ CUSTOMIZATION:
 
     .progress-track {
       height: 6px; border-radius: 999px;
-      background: rgba(255,255,255,0.08);
+      background: rgba(25, 153, 153, 0.10);
       overflow: hidden;
     }
 
@@ -541,22 +881,26 @@ CUSTOMIZATION:
     }
 
     .quarter-active {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(25, 153, 153, 0.14);
+      box-shadow: 0 12px 30px rgba(25, 153, 153, 0.08);
     }
 
     .quarter-connector {
       width: 24px; height: 2px;
-      background: rgba(255,255,255,0.12);
+      background: rgba(25, 153, 153, 0.18);
       flex-shrink: 0;
     }
 
     /* ============================================================
        SLIDE 6 — NEXT STEPS
     ============================================================ */
-    #slide-6 { background: radial-gradient(ellipse at 30% 20%, #200a20 0%, var(--bg-primary) 65%); }
-    #slide-6 .orb-1 { width: 500px; height: 500px; background: #fa709a; top: -150px; left: -150px; opacity: 0.18; }
-    #slide-6 .orb-2 { width: 300px; height: 300px; background: #fee140; bottom: -80px; right: -80px; opacity: 0.12; }
+    #slide-6 { background:
+      radial-gradient(circle at 28% 18%, rgba(24, 214, 204, 0.13), transparent 30%),
+      linear-gradient(180deg, #f8ffff 0%, var(--bg-primary) 100%);
+    }
+    #slide-6 .orb-1 { width: 500px; height: 500px; background: var(--brand-bright); top: -150px; left: -150px; opacity: 0.15; }
+    #slide-6 .orb-2 { width: 300px; height: 300px; background: var(--brand-primary); bottom: -80px; right: -80px; opacity: 0.10; }
 
     .priorities-list {
       display: flex; flex-direction: column; gap: 14px;
@@ -575,6 +919,9 @@ CUSTOMIZATION:
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       font-size: 18px; font-weight: 800;
+      background: linear-gradient(135deg, rgba(24, 214, 204, 0.20), rgba(25, 153, 153, 0.12)) !important;
+      color: var(--brand-primary) !important;
+      box-shadow: inset 0 0 0 1px rgba(25, 153, 153, 0.10);
     }
 
     .priority-body { flex: 1; }
@@ -595,17 +942,18 @@ CUSTOMIZATION:
     .priority-arrow {
       flex-shrink: 0;
       font-size: 16px;
-      color: var(--text-tertiary);
+      color: var(--brand-primary);
     }
 
     .target-banner {
       margin-top: 20px;
       padding: 16px 28px;
       border-radius: 14px;
-      background: linear-gradient(135deg, rgba(250,112,154,0.15) 0%, rgba(254,225,64,0.1) 100%);
-      border: 1px solid rgba(250,112,154,0.25);
+      background: linear-gradient(135deg, rgba(24, 214, 204, 0.10) 0%, rgba(255, 255, 255, 0.88) 100%);
+      border: 1px solid rgba(25, 153, 153, 0.16);
       display: flex; align-items: center; gap: 14px;
       position: relative; z-index: 1;
+      box-shadow: 0 14px 32px rgba(25, 153, 153, 0.08);
     }
 
     .target-banner i { font-size: 20px; opacity: 0.9; }
@@ -616,9 +964,12 @@ CUSTOMIZATION:
     /* ============================================================
        SLIDE 7 — TEAM & CLOSING
     ============================================================ */
-    #slide-7 { background: radial-gradient(ellipse at 60% 40%, #0a1530 0%, var(--bg-primary) 65%); }
-    #slide-7 .orb-1 { width: 500px; height: 500px; background: #667eea; top: -120px; right: -120px; opacity: 0.2; }
-    #slide-7 .orb-2 { width: 350px; height: 350px; background: #f093fb; bottom: -80px; left: -80px; opacity: 0.15; }
+    #slide-7 { background:
+      radial-gradient(circle at 74% 24%, rgba(24, 214, 204, 0.12), transparent 30%),
+      linear-gradient(180deg, #f8ffff 0%, var(--bg-primary) 100%);
+    }
+    #slide-7 .orb-1 { width: 500px; height: 500px; background: var(--brand-bright); top: -120px; right: -120px; opacity: 0.14; }
+    #slide-7 .orb-2 { width: 350px; height: 350px; background: var(--brand-primary); bottom: -80px; left: -80px; opacity: 0.10; }
 
     .team-members-grid {
       display: grid;
@@ -642,6 +993,12 @@ CUSTOMIZATION:
       font-size: 20px; font-weight: 800;
       color: #fff;
       flex-shrink: 0;
+      background: linear-gradient(135deg, var(--brand-primary), var(--brand-bright)) !important;
+      box-shadow: 0 10px 22px rgba(25, 153, 153, 0.18);
+    }
+
+    .member-card:nth-child(even) .member-avatar {
+      background: linear-gradient(135deg, var(--brand-bright), var(--brand-primary)) !important;
     }
 
     .member-name {
@@ -668,20 +1025,22 @@ CUSTOMIZATION:
     .shoutout-banner {
       padding: 12px 24px;
       border-radius: 12px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(25,153,153,0.16);
       font-size: 13px;
       color: var(--text-secondary);
       text-align: center;
       max-width: 600px;
+      box-shadow: 0 12px 28px rgba(25, 153, 153, 0.08);
     }
 
     .footer-text {
       font-size: 12px;
-      color: var(--text-tertiary);
+      color: var(--brand-primary);
       letter-spacing: 1px;
       text-align: center;
       margin-top: 4px;
+      opacity: 0.82;
     }
 
     /* ============================================================
@@ -699,6 +1058,7 @@ CUSTOMIZATION:
       .slide { padding: 40px 40px; }
       .metrics-grid { grid-template-columns: repeat(2, 1fr); }
       .team-members-grid { grid-template-columns: repeat(3, 1fr); }
+      .overview-card { padding: 20px 22px; }
       :root {
         --text-hero: 58px;
         --text-title: 38px;
@@ -712,11 +1072,20 @@ CUSTOMIZATION:
     ============================================================ */
     @media (max-width: 768px) {
       .slide { padding: 28px 20px; }
-      .metrics-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-      .milestones-grid { grid-template-columns: 1fr; }
-      .team-grid { grid-template-columns: 1fr; }
+      .glass-card { padding: 18px; border-radius: 16px; }
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .overview-card { padding: 16px; gap: 10px; }
+      .metric-title { font-size: 18px; }
+      .metric-label { font-size: 12px; }
+      .metric-meta { font-size: 10px; }
+      .hero-logo { min-width: min(86vw, 380px); padding: 14px 18px 8px; }
+      .hero-logo-wordmark { font-size: clamp(56px, 15vw, 108px); }
+      .milestones-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .team-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
       .team-members-grid { grid-template-columns: repeat(2, 1fr); }
       #progress-nav { height: 2px; }
+      #dot-nav { bottom: 14px; gap: 8px; }
+      .dot-button { width: 12px; height: 12px; }
       :root {
         --text-hero: 44px;
         --text-title: 30px;
@@ -747,14 +1116,16 @@ CUSTOMIZATION:
 
       <div class="hero-content">
         <div data-animate>
-          <div class="hero-logo grad-purple">Zoku</div>
-          <div class="hero-tagline">Building the future, together</div>
+          <div class="hero-logo" aria-label="Zoku logo">
+            <span class="hero-logo-wordmark">Zoku</span>
+          </div>
+          <div class="hero-tagline">Frontend Team</div>
         </div>
 
         <div class="hero-divider" data-animate></div>
 
         <div data-animate>
-          <div class="hero-title">All-Hands Meeting</div>
+          <div class="hero-title">All-Hands Update</div>
         </div>
 
         <div class="hero-meta" data-animate>
@@ -769,59 +1140,77 @@ CUSTOMIZATION:
         </div>
 
         <div class="hero-badge" data-animate>
-          Use ← → arrow keys or drag to navigate
+          Beta testing | QA deployment | Build hardening | Testing protocols | Optimization
         </div>
       </div>
     </section>
 
     <!-- ============================================================
-         SLIDE 2: COMPANY UPDATES
+         SLIDE 2: FRONTEND SNAPSHOT
     ============================================================ -->
-    <section class="slide" id="slide-2" aria-label="Company updates">
+    <section class="slide" id="slide-2" aria-label="Frontend snapshot">
       <div class="orb orb-1"></div>
       <div class="orb orb-2"></div>
 
       <div class="slide-header" data-animate>
-        <div class="slide-label">Overview</div>
-        <div class="slide-title grad-blue">Company Updates</div>
-        <div class="slide-subtitle">Where Zoku stands today</div>
+        <div class="slide-label">Current State</div>
+        <div class="slide-title grad-info">Beta Testing, Deployment & Optimization</div>
+        <div class="slide-subtitle">Where we are now: tightening the MVP, validating features, and preparing for wider beta</div>
       </div>
 
       <div class="metrics-grid">
-        <div class="glass-card metric-card" data-animate>
-          <div class="metric-icon" style="background: linear-gradient(135deg, rgba(102,126,234,0.25), rgba(118,75,162,0.25));">
-            <i class="fas fa-chart-line grad-purple"></i>
+        <div class="glass-card metric-card overview-card accent-info" data-animate>
+          <div class="metric-icon">
+            <i class="fas fa-list-check grad-purple"></i>
           </div>
-          <div class="metric-stat grad-purple">[TBD]</div>
-          <div class="metric-label">[TBD — Overall progress metric]</div>
-          <div class="metric-trend">↑ [TBD]%</div>
+          <div class="metric-title grad-purple">Testing Plans</div>
+          <div class="metric-label">Mapped the testing story, aligned coverage needs, and created a structure the team can now fill in with final case counts and pass/fail details.</div>
+          <div class="metric-meta">[TBD - add case count or pass rate]</div>
         </div>
 
-        <div class="glass-card metric-card" data-animate>
-          <div class="metric-icon" style="background: linear-gradient(135deg, rgba(79,172,254,0.25), rgba(0,242,254,0.25));">
-            <i class="fas fa-rocket grad-blue"></i>
+        <div class="glass-card metric-card overview-card accent-brand" data-animate>
+          <div class="metric-icon">
+            <i class="fas fa-pencil-ruler grad-blue"></i>
           </div>
-          <div class="metric-stat grad-blue">[TBD]</div>
-          <div class="metric-label">[TBD — Growth / traction metric]</div>
-          <div class="metric-trend">↑ [TBD]%</div>
+          <div class="metric-title grad-blue">Final UI/UX Flows</div>
+          <div class="metric-label">Pulled core journeys into a cleaner, more presentation-ready state so the team can show polished flows and validate the last gaps.</div>
+          <div class="metric-meta">[TBD - add final flow screenshot]</div>
         </div>
 
-        <div class="glass-card metric-card" data-animate>
-          <div class="metric-icon" style="background: linear-gradient(135deg, rgba(240,147,251,0.25), rgba(245,87,108,0.25));">
-            <i class="fas fa-layer-group grad-pink"></i>
+        <div class="glass-card metric-card overview-card accent-warning" data-animate>
+          <div class="metric-icon">
+            <i class="fas fa-cloud-arrow-up grad-pink"></i>
           </div>
-          <div class="metric-stat grad-pink">[TBD]</div>
-          <div class="metric-label">[TBD — Platform status]</div>
-          <div class="metric-trend">↑ [TBD]%</div>
+          <div class="metric-title grad-pink">Deployment</div>
+          <div class="metric-label">Worked through release handoff steps so pushing builds, sharing updates, and moving from local work to testing feels less fragile.</div>
+          <div class="metric-meta">[TBD - add build or environment note]</div>
         </div>
 
-        <div class="glass-card metric-card" data-animate>
-          <div class="metric-icon" style="background: linear-gradient(135deg, rgba(67,233,123,0.25), rgba(56,249,215,0.25));">
-            <i class="fas fa-users grad-green"></i>
+        <div class="glass-card metric-card overview-card accent-error" data-animate>
+          <div class="metric-icon">
+            <i class="fas fa-bug grad-green"></i>
           </div>
-          <div class="metric-stat grad-green">[TBD]</div>
-          <div class="metric-label">[TBD — User engagement]</div>
-          <div class="metric-trend">↑ [TBD]%</div>
+          <div class="metric-title grad-green">Debugging</div>
+          <div class="metric-label">Traced issues across Docker, database, and frontend behavior to reduce blocker time and make end-to-end troubleshooting easier.</div>
+          <div class="metric-meta">[TBD - add one bug and fix example]</div>
+        </div>
+
+        <div class="glass-card metric-card overview-card accent-success" data-animate>
+          <div class="metric-icon">
+            <i class="fas fa-code-branch grad-sunset"></i>
+          </div>
+          <div class="metric-title grad-sunset">Optimizations</div>
+          <div class="metric-label">Cleaned code, streamlined styling, and tightened GitHub workflows so the frontend is easier to change and easier to review.</div>
+          <div class="metric-meta">[TBD - add before or after example]</div>
+        </div>
+
+        <div class="glass-card metric-card overview-card accent-brand" data-animate>
+          <div class="metric-icon">
+            <i class="fas fa-people-group grad-soft"></i>
+          </div>
+          <div class="metric-title grad-soft">Organizational</div>
+          <div class="metric-label">Kept priorities, follow-ups, and ownership moving so the work stayed coordinated while technical details were still shifting.</div>
+          <div class="metric-meta">Led by [TBD - name]</div>
         </div>
       </div>
     </section>
@@ -834,319 +1223,318 @@ CUSTOMIZATION:
       <div class="orb orb-2"></div>
 
       <div class="slide-header" data-animate>
-        <div class="slide-label">Achievements</div>
-        <div class="slide-title grad-pink">Key Milestones</div>
-        <div class="slide-subtitle">What we've achieved</div>
+        <div class="slide-label">Accomplishments</div>
+        <div class="slide-title grad-success">Key Milestones</div>
+        <div class="slide-subtitle">Wins the frontend team can already speak to, even before the final details are dropped in</div>
       </div>
 
       <div class="milestones-grid">
-        <div class="glass-card milestone-card" data-animate>
-          <div class="milestone-check" style="background: linear-gradient(135deg, rgba(102,126,234,0.3), rgba(118,75,162,0.3));">
+        <div class="glass-card milestone-card accent-info" data-animate>
+          <div class="milestone-check">
             <i class="fas fa-check grad-purple"></i>
           </div>
           <div class="milestone-body">
-            <div class="milestone-title">[TBD — Major milestone 1]</div>
-            <div class="milestone-desc">[TBD — Description of what was accomplished and why it matters]</div>
-            <div class="milestone-tag" style="background: rgba(102,126,234,0.15); color: #a78bfa;">Q1 2026</div>
+            <div class="milestone-title">Unified testing protocols in ClickUp</div>
+            <div class="milestone-desc">The team now has a clearer shared system for planning, assigning, and tracking test work instead of keeping coverage scattered.</div>
+            <div class="milestone-tag">Process</div>
           </div>
         </div>
 
-        <div class="glass-card milestone-card" data-animate>
-          <div class="milestone-check" style="background: linear-gradient(135deg, rgba(79,172,254,0.3), rgba(0,242,254,0.3));">
+        <div class="glass-card milestone-card accent-brand" data-animate>
+          <div class="milestone-check">
             <i class="fas fa-check grad-blue"></i>
           </div>
           <div class="milestone-body">
-            <div class="milestone-title">[TBD — Major milestone 2]</div>
-            <div class="milestone-desc">[TBD — Description of what was accomplished and why it matters]</div>
-            <div class="milestone-tag" style="background: rgba(79,172,254,0.15); color: #4facfe;">Q1 2026</div>
+            <div class="milestone-title">Final UI/UX flows pulled into alignment</div>
+            <div class="milestone-desc">Core screens and user journeys moved closer to a stable, demo-ready state for review, screenshots, and tester walkthroughs.</div>
+            <div class="milestone-tag">Product</div>
           </div>
         </div>
 
-        <div class="glass-card milestone-card" data-animate>
-          <div class="milestone-check" style="background: linear-gradient(135deg, rgba(240,147,251,0.3), rgba(245,87,108,0.3));">
+        <div class="glass-card milestone-card accent-error" data-animate>
+          <div class="milestone-check">
             <i class="fas fa-check grad-pink"></i>
           </div>
           <div class="milestone-body">
-            <div class="milestone-title">[TBD — Major milestone 3]</div>
-            <div class="milestone-desc">[TBD — Description of what was accomplished and why it matters]</div>
-            <div class="milestone-tag" style="background: rgba(240,147,251,0.15); color: #f093fb;">Q2 2026</div>
+            <div class="milestone-title">Cross-stack debugging got less chaotic</div>
+            <div class="milestone-desc">Docker, database, and frontend issues were traced through the full chain, making blockers easier to isolate and explain.</div>
+            <div class="milestone-tag">Infra + FE</div>
           </div>
         </div>
 
-        <div class="glass-card milestone-card" data-animate>
-          <div class="milestone-check" style="background: linear-gradient(135deg, rgba(67,233,123,0.3), rgba(56,249,215,0.3));">
+        <div class="glass-card milestone-card accent-success" data-animate>
+          <div class="milestone-check">
             <i class="fas fa-check grad-green"></i>
           </div>
           <div class="milestone-body">
-            <div class="milestone-title">[TBD — Major milestone 4]</div>
-            <div class="milestone-desc">[TBD — Description of what was accomplished and why it matters]</div>
-            <div class="milestone-tag" style="background: rgba(67,233,123,0.15); color: #43e97b;">Q2 2026</div>
+            <div class="milestone-title">Code and styling became easier to maintain</div>
+            <div class="milestone-desc">Cleanup work reduced noise, improved consistency, and made GitHub collaboration more straightforward for future iterations.</div>
+            <div class="milestone-tag">Quality</div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ============================================================
-         SLIDE 4: FRONTEND TEAM UPDATE
+         SLIDE 4: WHAT WE WORKED ON
     ============================================================ -->
     <section class="slide" id="slide-4" aria-label="Frontend team update">
       <div class="orb orb-1"></div>
       <div class="orb orb-2"></div>
 
       <div class="slide-header" data-animate>
-        <div class="slide-label">Team Spotlight</div>
-        <div class="slide-title grad-blue">Frontend Team Update</div>
-        <div class="slide-subtitle">What we've been building</div>
+        <div class="slide-label">Workstream Breakdown</div>
+        <div class="slide-title grad-blue">What We Worked On</div>
+        <div class="slide-subtitle">A fill-ready slide for the detailed talking points you will want once screenshots and specifics arrive</div>
       </div>
 
       <div class="team-grid">
-        <!-- What we worked on -->
-        <div class="glass-card team-section-card" data-animate>
+        <div class="glass-card team-section-card accent-brand" data-animate>
           <div class="team-section-header">
-            <div class="team-section-icon" style="background: linear-gradient(135deg, rgba(79,172,254,0.25), rgba(0,242,254,0.25));">
-              <i class="fas fa-code" style="color: #4facfe;"></i>
+            <div class="team-section-icon">
+              <i class="fas fa-code"></i>
             </div>
-            <div class="team-section-title">What we worked on</div>
+            <div class="team-section-title">Completed or moved forward</div>
           </div>
           <ul class="team-list">
-            <li>[TBD — Feature / project 1]</li>
-            <li>[TBD — Feature / project 2]</li>
-            <li>[TBD — Feature / project 3]</li>
+            <li>Testing plans and validation structure</li>
+            <li>Final UI/UX flow refinement</li>
+            <li>Deployment prep and release handoff cleanup</li>
           </ul>
         </div>
 
-        <!-- Key accomplishments -->
-        <div class="glass-card team-section-card" data-animate>
+        <div class="glass-card team-section-card accent-info" data-animate>
           <div class="team-section-header">
-            <div class="team-section-icon" style="background: linear-gradient(135deg, rgba(67,233,123,0.25), rgba(56,249,215,0.25));">
-              <i class="fas fa-trophy" style="color: #43e97b;"></i>
+            <div class="team-section-icon">
+              <i class="fas fa-wrench"></i>
             </div>
-            <div class="team-section-title">Key accomplishments</div>
+            <div class="team-section-title">Technical lift</div>
           </div>
           <ul class="team-list">
-            <li>[TBD — Win 1]</li>
-            <li>[TBD — Win 2]</li>
+            <li>Docker, database, and frontend debugging</li>
+            <li>Cleaner code and more streamlined styling</li>
+            <li>GitHub workflow polish and review hygiene</li>
           </ul>
         </div>
 
-        <!-- Current projects -->
-        <div class="glass-card team-section-card" data-animate>
+        <div class="glass-card team-section-card accent-warning" data-animate>
           <div class="team-section-header">
-            <div class="team-section-icon" style="background: linear-gradient(135deg, rgba(240,147,251,0.25), rgba(245,87,108,0.25));">
-              <i class="fas fa-spinner" style="color: #f093fb;"></i>
+            <div class="team-section-icon">
+              <i class="fas fa-spinner"></i>
             </div>
             <div class="team-section-title">Current projects</div>
           </div>
           <ul class="team-list">
-            <li>[TBD — Ongoing work 1]</li>
-            <li>[TBD — Ongoing work 2]</li>
+            <li>Push the latest build to TestFlight</li>
+            <li>Invite testers and gather first-pass feedback</li>
+            <li>Ensure feature functionality across core flows</li>
+            <li>Finalize test cases before wider beta</li>
           </ul>
         </div>
 
-        <!-- Timeline & goals -->
-        <div class="glass-card team-section-card" data-animate>
+        <div class="glass-card team-section-card accent-success" data-animate>
           <div class="team-section-header">
-            <div class="team-section-icon" style="background: linear-gradient(135deg, rgba(250,112,154,0.25), rgba(254,225,64,0.25));">
-              <i class="fas fa-flag-checkered" style="color: #fa709a;"></i>
+            <div class="team-section-icon">
+              <i class="fas fa-images"></i>
             </div>
-            <div class="team-section-title">Timeline &amp; goals</div>
+            <div class="team-section-title">Screenshots and assets to add</div>
           </div>
-          <ul class="team-list">
-            <li>[TBD — Next sprint goal]</li>
-            <li>[TBD — Month goal]</li>
-          </ul>
+          <div class="asset-stack">
+            <div class="asset-placeholder">
+              <div class="asset-placeholder-title">[TBD - final UI/UX flow screenshot]</div>
+              <div class="asset-placeholder-copy">Replace with a polished walkthrough image and one-line takeaway for the audience.</div>
+            </div>
+            <div class="asset-placeholder">
+              <div class="asset-placeholder-title">[TBD - TestFlight, ClickUp, or beta prep screenshot]</div>
+              <div class="asset-placeholder-copy">Use this frame for QA flow, release proof, or an invited-user beta visual with a short caption.</div>
+            </div>
+          </div>
+          <div class="asset-footnote">[TBD - add one short caption or proof point for each visual]</div>
         </div>
       </div>
     </section>
 
     <!-- ============================================================
-         SLIDE 5: TIMELINE & STATUS
+         SLIDE 5: CURRENT PROGRESS
     ============================================================ -->
-    <section class="slide" id="slide-5" aria-label="Timeline and project status">
+    <section class="slide" id="slide-5" aria-label="Current frontend progress">
       <div class="orb orb-1"></div>
       <div class="orb orb-2"></div>
 
       <div class="slide-header" data-animate>
-        <div class="slide-label">Progress</div>
-        <div class="slide-title grad-green">Timeline &amp; Project Status</div>
-        <div class="slide-subtitle">Current status across all teams</div>
+        <div class="slide-label">Readiness</div>
+        <div class="slide-title grad-blue">Current Progress</div>
+        <div class="slide-subtitle">A suggested status view for testing, release readiness, and invited-user beta prep</div>
       </div>
 
       <div class="status-grid">
-        <!-- Backend -->
-        <div class="glass-card status-row" data-animate>
-          <div class="status-team-name"><i class="fas fa-server" style="margin-right:8px; opacity:0.6;"></i>Backend</div>
+        <div class="glass-card status-row accent-info" data-animate>
+          <div class="status-team-name"><i class="fas fa-list-check" style="margin-right:8px; opacity:0.6;"></i>Testing</div>
           <div class="status-badge badge-progress">In Progress</div>
           <div class="progress-wrap">
-            <div class="progress-label"><span>[TBD — Status]</span><span data-pct="0">[TBD]%</span></div>
-            <div class="progress-track"><div class="progress-bar" data-target="65" style="background: var(--gradient-blue);"></div></div>
+            <div class="progress-label"><span>Shared protocol in place</span><span>Case totals TBD</span></div>
+            <div class="progress-track"><div class="progress-bar" data-target="78" style="background: var(--gradient-blue);"></div></div>
           </div>
-          <div class="status-note">[TBD — Backend team status/progress details]</div>
+          <div class="status-note">Unified testing protocols in ClickUp give this workstream structure; fill in the exact counts and blockers once the latest pass is done.</div>
         </div>
 
-        <!-- Frontend -->
-        <div class="glass-card status-row" data-animate>
-          <div class="status-team-name"><i class="fas fa-palette" style="margin-right:8px; opacity:0.6;"></i>Frontend</div>
+        <div class="glass-card status-row accent-success" data-animate>
+          <div class="status-team-name"><i class="fas fa-pencil-ruler" style="margin-right:8px; opacity:0.6;"></i>UI / UX</div>
+          <div class="status-badge badge-complete">Polishing</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>Core flows aligned</span><span>Screenshots TBD</span></div>
+            <div class="progress-track"><div class="progress-bar" data-target="88" style="background: var(--gradient-purple);"></div></div>
+          </div>
+          <div class="status-note">The main journeys are close enough to present now, with final proof points and captured flows still to plug in.</div>
+        </div>
+
+        <div class="glass-card status-row accent-warning" data-animate>
+          <div class="status-team-name"><i class="fas fa-cloud-arrow-up" style="margin-right:8px; opacity:0.6;"></i>Release</div>
           <div class="status-badge badge-progress">In Progress</div>
           <div class="progress-wrap">
-            <div class="progress-label"><span>[TBD — Status]</span><span data-pct="0">[TBD]%</span></div>
-            <div class="progress-track"><div class="progress-bar" data-target="70" style="background: var(--gradient-purple);"></div></div>
+            <div class="progress-label"><span>Deployment + TestFlight prep</span><span>Build status TBD</span></div>
+            <div class="progress-track"><div class="progress-bar" data-target="62" style="background: var(--gradient-pink);"></div></div>
           </div>
-          <div class="status-note">[TBD — Frontend team status/progress details]</div>
+          <div class="status-note">Use this row to summarize the current build push, deployment state, and what still needs verification before external testers.</div>
         </div>
 
-        <!-- Design -->
-        <div class="glass-card status-row" data-animate>
-          <div class="status-team-name"><i class="fas fa-pen-nib" style="margin-right:8px; opacity:0.6;"></i>Design</div>
-          <div class="status-badge badge-complete">Completed</div>
+        <div class="glass-card status-row accent-brand" data-animate>
+          <div class="status-team-name"><i class="fas fa-user-check" style="margin-right:8px; opacity:0.6;"></i>Beta</div>
+          <div class="status-badge badge-planned">Next Up</div>
           <div class="progress-wrap">
-            <div class="progress-label"><span>[TBD — Status]</span><span data-pct="0">[TBD]%</span></div>
-            <div class="progress-track"><div class="progress-bar" data-target="90" style="background: var(--gradient-pink);"></div></div>
+            <div class="progress-label"><span>Invited website users</span><span>Date TBD</span></div>
+            <div class="progress-track"><div class="progress-bar" data-target="42" style="background: var(--gradient-green);"></div></div>
           </div>
-          <div class="status-note">[TBD — Design team status/progress details]</div>
-        </div>
-
-        <!-- Mobile -->
-        <div class="glass-card status-row" data-animate>
-          <div class="status-team-name"><i class="fas fa-mobile-alt" style="margin-right:8px; opacity:0.6;"></i>Mobile</div>
-          <div class="status-badge badge-planned">Planned</div>
-          <div class="progress-wrap">
-            <div class="progress-label"><span>[TBD — Status]</span><span data-pct="0">[TBD]%</span></div>
-            <div class="progress-track"><div class="progress-bar" data-target="30" style="background: var(--gradient-green);"></div></div>
-          </div>
-          <div class="status-note">[TBD — Mobile team status/progress details]</div>
+          <div class="status-note">The next milestone is a small beta group once feature functionality and final test cases are fully buttoned up.</div>
         </div>
       </div>
 
-      <!-- Quarter timeline -->
       <div class="quarter-timeline" data-animate>
         <div class="quarter-item quarter-active">
-          <div class="quarter-label">Q2 2026</div>
-          <div class="quarter-sub">Now • Foundation</div>
+          <div class="quarter-label">Now</div>
+          <div class="quarter-sub">Harden flows</div>
         </div>
         <div class="quarter-connector"></div>
         <div class="quarter-item">
-          <div class="quarter-label">Q3 2026</div>
-          <div class="quarter-sub">V2 Beta</div>
+          <div class="quarter-label">Next</div>
+          <div class="quarter-sub">TestFlight + invites</div>
         </div>
         <div class="quarter-connector"></div>
         <div class="quarter-item">
-          <div class="quarter-label">Q4 2026</div>
-          <div class="quarter-sub">V2 Launch</div>
+          <div class="quarter-label">Then</div>
+          <div class="quarter-sub">Website beta</div>
         </div>
       </div>
     </section>
 
     <!-- ============================================================
-         SLIDE 6: NEXT STEPS
+         SLIDE 6: UPCOMING GOALS
     ============================================================ -->
-    <section class="slide" id="slide-6" aria-label="Next steps">
+    <section class="slide" id="slide-6" aria-label="Upcoming goals">
       <div class="orb orb-1"></div>
       <div class="orb orb-2"></div>
 
       <div class="slide-header" data-animate>
-        <div class="slide-label">Looking Ahead</div>
-        <div class="slide-title grad-sunset">Next Steps</div>
-        <div class="slide-subtitle">Priorities for V2</div>
+        <div class="slide-label">Timeline and Goals</div>
+        <div class="slide-title grad-warning">Upcoming Goals</div>
+        <div class="slide-subtitle">What the frontend team is driving between now and invited-user beta</div>
       </div>
 
       <div class="priorities-list">
-        <div class="glass-card priority-item" data-animate>
-          <div class="priority-num" style="background: linear-gradient(135deg, rgba(250,112,154,0.3), rgba(254,225,64,0.3)); color: #fa709a;">1</div>
+        <div class="glass-card priority-item accent-info" data-animate>
+          <div class="priority-num">1</div>
           <div class="priority-body">
-            <div class="priority-title">[TBD — Priority 1]</div>
-            <div class="priority-desc">[TBD — Description of this priority and why it matters for V2]</div>
+            <div class="priority-title">Push the latest build to TestFlight</div>
+            <div class="priority-desc">Package the most stable experience, verify install and access, and prepare the invite flow for first-round testers.</div>
           </div>
           <div class="priority-arrow"><i class="fas fa-chevron-right"></i></div>
         </div>
 
-        <div class="glass-card priority-item" data-animate>
-          <div class="priority-num" style="background: linear-gradient(135deg, rgba(102,126,234,0.3), rgba(118,75,162,0.3)); color: #667eea;">2</div>
+        <div class="glass-card priority-item accent-brand" data-animate>
+          <div class="priority-num">2</div>
           <div class="priority-body">
-            <div class="priority-title">[TBD — Priority 2]</div>
-            <div class="priority-desc">[TBD — Description of this priority and why it matters for V2]</div>
+            <div class="priority-title">Invite testers and gather early feedback</div>
+            <div class="priority-desc">Start with a small group so the team can capture issues quickly without widening scope too early.</div>
           </div>
           <div class="priority-arrow"><i class="fas fa-chevron-right"></i></div>
         </div>
 
-        <div class="glass-card priority-item" data-animate>
-          <div class="priority-num" style="background: linear-gradient(135deg, rgba(79,172,254,0.3), rgba(0,242,254,0.3)); color: #4facfe;">3</div>
+        <div class="glass-card priority-item accent-warning" data-animate>
+          <div class="priority-num">3</div>
           <div class="priority-body">
-            <div class="priority-title">[TBD — Priority 3]</div>
-            <div class="priority-desc">[TBD — Description of this priority and why it matters for V2]</div>
+            <div class="priority-title">Verify feature functionality across core flows</div>
+            <div class="priority-desc">Run the end-to-end journeys most likely to be demoed or exercised during beta and close the remaining gaps.</div>
           </div>
           <div class="priority-arrow"><i class="fas fa-chevron-right"></i></div>
         </div>
 
-        <div class="glass-card priority-item" data-animate>
-          <div class="priority-num" style="background: linear-gradient(135deg, rgba(67,233,123,0.3), rgba(56,249,215,0.3)); color: #43e97b;">4</div>
+        <div class="glass-card priority-item accent-success" data-animate>
+          <div class="priority-num">4</div>
           <div class="priority-body">
-            <div class="priority-title">[TBD — Priority 4]</div>
-            <div class="priority-desc">[TBD — Description of this priority and why it matters for V2]</div>
+            <div class="priority-title">Finalize test cases before broader rollout</div>
+            <div class="priority-desc">Turn the current testing plan into a complete pass/fail checklist the whole team can use with confidence.</div>
           </div>
           <div class="priority-arrow"><i class="fas fa-chevron-right"></i></div>
         </div>
       </div>
 
-      <div class="target-banner" data-animate>
+      <div class="target-banner accent-warning" data-animate>
         <i class="fas fa-flag grad-sunset"></i>
         <div class="target-banner-text">
-          Target: <strong>V2 Launch — [TBD — Target date]</strong> &nbsp;·&nbsp; Let's build something great.
+          Target: <strong>beta test with invited website users - [TBD confirm date]</strong> | Add release notes, screenshots, and final metrics before presenting.
         </div>
       </div>
     </section>
 
     <!-- ============================================================
-         SLIDE 7: TEAM & CLOSING
+         SLIDE 7: TEAM AND FINAL FILL-INS
     ============================================================ -->
     <section class="slide" id="slide-7" aria-label="Team and closing">
       <div class="orb orb-1"></div>
       <div class="orb orb-2"></div>
 
       <div class="slide-header" data-animate style="margin-bottom: 24px;">
-        <div class="slide-label">The People</div>
-        <div class="slide-title grad-purple">The Team</div>
+        <div class="slide-label">People and Ownership</div>
+        <div class="slide-title grad-purple">Team and Final Fill-Ins</div>
+        <div class="slide-subtitle">Add names, shoutouts, screenshots, and proof points here right before the presentation is finalized</div>
       </div>
 
-      <!-- Team member grid — 5 placeholders, duplicate/remove as needed -->
       <div class="team-members-grid">
         <div class="glass-card member-card" data-animate>
-          <div class="member-avatar" style="background: var(--gradient-purple);">[?]</div>
-          <div class="member-name">[Team Member Name]</div>
-          <div class="member-role">[Role]</div>
+          <div class="member-avatar">YN</div>
+          <div class="member-name">[Your Name]</div>
+          <div class="member-role">Organization / coordination</div>
         </div>
         <div class="glass-card member-card" data-animate>
-          <div class="member-avatar" style="background: var(--gradient-blue);">[?]</div>
-          <div class="member-name">[Team Member Name]</div>
-          <div class="member-role">[Role]</div>
+          <div class="member-avatar">FE</div>
+          <div class="member-name">[Teammate Name]</div>
+          <div class="member-role">Frontend engineering</div>
         </div>
         <div class="glass-card member-card" data-animate>
-          <div class="member-avatar" style="background: var(--gradient-pink);">[?]</div>
-          <div class="member-name">[Team Member Name]</div>
-          <div class="member-role">[Role]</div>
+          <div class="member-avatar">UX</div>
+          <div class="member-name">[Teammate Name]</div>
+          <div class="member-role">UI / UX flows</div>
         </div>
         <div class="glass-card member-card" data-animate>
-          <div class="member-avatar" style="background: var(--gradient-green);">[?]</div>
-          <div class="member-name">[Team Member Name]</div>
-          <div class="member-role">[Role]</div>
+          <div class="member-avatar">QA</div>
+          <div class="member-name">[Teammate Name]</div>
+          <div class="member-role">Testing / QA</div>
         </div>
         <div class="glass-card member-card" data-animate>
-          <div class="member-avatar" style="background: var(--gradient-sunset);">[?]</div>
-          <div class="member-name">[Team Member Name]</div>
-          <div class="member-role">[Role]</div>
+          <div class="member-avatar">RL</div>
+          <div class="member-name">[Teammate Name]</div>
+          <div class="member-role">Release / TestFlight</div>
         </div>
       </div>
 
-      <!-- Shoutouts -->
-      <div class="shoutout-banner" data-animate>
-        <i class="fas fa-star" style="color: #fee140; margin-right: 8px;"></i>
-        <strong>Shoutout:</strong> [TBD — Recognition / kudos for team members]
+      <div class="shoutout-banner accent-success" data-animate>
+        <i class="fas fa-star" style="margin-right: 8px;"></i>
+        <strong>Final prep:</strong> add contributor shoutouts, drop in screenshots, confirm any metrics, and lock the beta date before presenting.
       </div>
 
-      <!-- Closing -->
       <div class="closing-section" data-animate>
-        <div class="closing-message grad-purple">Let's build Zoku V2!</div>
-        <div class="footer-text">Thank you &nbsp;·&nbsp; Zoku Team &nbsp;·&nbsp; May 2026</div>
+        <div class="closing-message grad-purple">Ready for testing, polish, and beta feedback.</div>
+        <div class="footer-text">Zoku Frontend Update | May 2026</div>
       </div>
     </section>
 
@@ -1158,6 +1546,8 @@ CUSTOMIZATION:
   <div id="progress-nav" aria-label="Slide progress" role="progressbar" aria-valuemin="1" aria-valuemax="7" aria-valuenow="1">
     <div id="progress-fill"></div>
   </div>
+
+  <div id="dot-nav" aria-label="Slide navigation"></div>
 
   <!-- Slide counter -->
   <div id="slide-counter" aria-live="polite"></div>
@@ -1171,14 +1561,28 @@ CUSTOMIZATION:
     /* ============================================================
        SLIDER STATE
     ============================================================ */
-    const SLIDE_COUNT = 7;
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const SLIDE_COUNT = slides.length;
     let currentSlide = 0;
     let prevSlide = -1;
 
     const slider       = document.getElementById('slider');
     const progressFill = document.getElementById('progress-fill');
     const progressNav  = document.getElementById('progress-nav');
+    const dotNav       = document.getElementById('dot-nav');
     const counter      = document.getElementById('slide-counter');
+    const dotButtons   = [];
+
+    slides.forEach((slide, idx) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'dot-button';
+      button.setAttribute('aria-label', `Go to slide ${idx + 1}: ${slide.getAttribute('aria-label')}`);
+      button.setAttribute('aria-pressed', 'false');
+      button.addEventListener('click', () => goToSlide(idx));
+      dotNav.appendChild(button);
+      dotButtons.push(button);
+    });
 
     /* Click anywhere on the bar to jump to that slide */
     progressNav.addEventListener('click', e => {
@@ -1191,6 +1595,11 @@ CUSTOMIZATION:
       progressFill.style.width = pct + '%';
       progressNav.setAttribute('aria-valuenow', idx + 1);
       counter.textContent = `${idx + 1} / ${SLIDE_COUNT}`;
+      dotButtons.forEach((button, buttonIdx) => {
+        const active = buttonIdx === idx;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
     }
 
     /* ============================================================
@@ -1363,7 +1772,7 @@ CUSTOMIZATION:
     ];
 
     function triggerSlideAnimations(idx) {
-      const slide = document.querySelectorAll('.slide')[idx];
+      const slide = slides[idx];
       resetAnimatables(slide);
       if (slideAnimations[idx]) slideAnimations[idx](slide);
     }
