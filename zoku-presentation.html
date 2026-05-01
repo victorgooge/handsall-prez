@@ -1739,7 +1739,264 @@ CUSTOMIZATION:
         max-height: none;
       }
     }
-</style>
+
+
+    /* ============================================================
+       WHITESPACE FILL / PRESENTATION BALANCE — May 1 final pass
+       Adds more visual weight to slides 4, 5, and final team slide
+       without reintroducing overflow.
+    ============================================================ */
+    #slide-4 {
+      padding: 30px 66px 54px !important;
+    }
+
+    #slide-4 .team-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px !important;
+    }
+
+    #slide-4 .team-section-card {
+      max-height: none !important;
+      min-height: 202px;
+      padding: 22px 24px !important;
+    }
+
+    #slide-4 .team-section-title {
+      font-size: 15px !important;
+    }
+
+    #slide-4 .team-list li {
+      font-size: 12.6px !important;
+      line-height: 1.44 !important;
+    }
+
+    .methodology-flow {
+      margin-top: 18px;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+      padding: 18px 22px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.35fr 1.15fr 0.35fr 1.15fr 0.35fr 1.15fr;
+      align-items: center;
+      gap: 10px;
+      overflow: hidden;
+    }
+
+    .methodology-flow::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 18% 35%, rgba(24, 214, 204, 0.12), transparent 32%),
+                  linear-gradient(135deg, rgba(255,255,255,0.78), rgba(222,249,249,0.58));
+      pointer-events: none;
+    }
+
+    .flow-step, .flow-arrow {
+      position: relative;
+      z-index: 1;
+    }
+
+    .flow-step {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr);
+      gap: 12px;
+      align-items: center;
+      min-height: 82px;
+      padding: 13px 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(25, 153, 153, 0.14);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.78);
+    }
+
+    .flow-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(24, 214, 204, 0.12);
+      border: 1px solid rgba(25, 153, 153, 0.14);
+      color: var(--brand-primary);
+      font-size: 16px;
+    }
+
+    .flow-kicker {
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 1.1px;
+      text-transform: uppercase;
+      color: var(--brand-primary);
+      margin-bottom: 3px;
+    }
+
+    .flow-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .flow-copy {
+      margin-top: 3px;
+      font-size: 10.2px;
+      color: var(--text-secondary);
+      line-height: 1.32;
+    }
+
+    .flow-arrow {
+      color: var(--brand-primary);
+      text-align: center;
+      opacity: 0.75;
+      font-size: 18px;
+    }
+
+    #slide-current-state {
+      padding: 22px 48px 46px !important;
+    }
+
+    #slide-current-state .visual-grid {
+      grid-template-columns: 0.82fr 1.08fr 1.08fr !important;
+      gap: 14px !important;
+    }
+
+    #slide-current-state .visual-card {
+      height: 545px !important;
+      padding: 15px 16px !important;
+      gap: 8px !important;
+    }
+
+    #slide-current-state .visual-shot-wrap {
+      height: 390px !important;
+      max-height: 390px !important;
+    }
+
+    #slide-current-state .hero-visual .visual-shot-wrap {
+      height: 430px !important;
+      max-height: 430px !important;
+    }
+
+    #slide-current-state .visual-copy {
+      font-size: 11.2px !important;
+      line-height: 1.42 !important;
+      min-height: 46px !important;
+    }
+
+    #slide-current-state .visual-caption {
+      font-size: 10.4px !important;
+    }
+
+    #slide-current-state .testing-summary-grid {
+      margin-top: 14px !important;
+      gap: 10px !important;
+    }
+
+    #slide-current-state .testing-summary-item {
+      padding: 12px 14px !important;
+      min-height: 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    #slide-7 {
+      padding: 30px 58px 44px !important;
+    }
+
+    #slide-7 .slide-header {
+      margin-bottom: 16px !important;
+    }
+
+    #slide-7 .slide-title {
+      font-size: clamp(34px, 3.55vw, 54px) !important;
+    }
+
+    #slide-7 .slide-subtitle {
+      font-size: clamp(15px, 1.35vw, 20px) !important;
+    }
+
+    #slide-7 .team-slide-layout {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      gap: 14px !important;
+    }
+
+    #slide-7 .team-row {
+      gap: 16px !important;
+    }
+
+    #slide-7 .member-card {
+      padding: 17px 16px !important;
+      gap: 9px !important;
+    }
+
+    #slide-7 .member-card.featured-member {
+      min-height: 150px !important;
+    }
+
+    #slide-7 .member-card.tester-card {
+      min-height: 126px !important;
+    }
+
+    #slide-7 .member-photo {
+      width: 72px !important;
+      height: 72px !important;
+    }
+
+    #slide-7 .member-avatar {
+      width: 62px !important;
+      height: 62px !important;
+      font-size: 19px !important;
+    }
+
+    #slide-7 .member-name {
+      font-size: 14px !important;
+    }
+
+    #slide-7 .member-role {
+      font-size: 11.2px !important;
+      line-height: 1.35 !important;
+    }
+
+    #slide-7 .shoutout-banner {
+      margin-top: 13px !important;
+      padding: 14px 26px !important;
+      max-width: 760px !important;
+      font-size: 13.2px !important;
+    }
+
+    #slide-7 .closing-section {
+      margin-top: 8px;
+      gap: 10px !important;
+    }
+
+    #slide-7 .closing-message {
+      font-size: clamp(32px, 3vw, 44px) !important;
+      line-height: 1.1 !important;
+    }
+
+    #slide-7 .footer-text {
+      font-size: 12px !important;
+      letter-spacing: 1.3px;
+    }
+
+    @media (max-height: 780px) {
+      #slide-4 .team-section-card { min-height: 182px; padding: 18px 20px !important; }
+      .methodology-flow { margin-top: 12px; padding: 14px 16px; }
+      .flow-step { min-height: 72px; padding: 10px 12px; }
+      .flow-copy { display: none; }
+      #slide-current-state .visual-card { height: 500px !important; }
+      #slide-current-state .visual-shot-wrap { height: 355px !important; max-height: 355px !important; }
+      #slide-current-state .hero-visual .visual-shot-wrap { height: 390px !important; max-height: 390px !important; }
+      #slide-7 .member-photo { width: 62px !important; height: 62px !important; }
+      #slide-7 .member-card.featured-member { min-height: 132px !important; }
+      #slide-7 .member-card.tester-card { min-height: 108px !important; }
+      #slide-7 .closing-message { font-size: clamp(27px, 2.6vw, 38px) !important; }
+    }
+
+  </style>
 </head>
 <body>
 <!-- ============================================================
@@ -1988,6 +2245,44 @@ CUSTOMIZATION:
 </div>
 
 </div>
+
+<div class="glass-card methodology-flow accent-brand" data-animate="">
+  <div class="flow-step">
+    <div class="flow-icon"><i class="fas fa-mobile-screen-button"></i></div>
+    <div>
+      <div class="flow-kicker">Step 01</div>
+      <div class="flow-title">Enter real app flow</div>
+      <div class="flow-copy">QA starts from the dashboard through the private Testing category.</div>
+    </div>
+  </div>
+  <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+  <div class="flow-step">
+    <div class="flow-icon"><i class="fas fa-map-location-dot"></i></div>
+    <div>
+      <div class="flow-kicker">Step 02</div>
+      <div class="flow-title">Move through clues</div>
+      <div class="flow-copy">First Clue, map/GPS navigation, and Proximity Search stay production-like.</div>
+    </div>
+  </div>
+  <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+  <div class="flow-step">
+    <div class="flow-icon"><i class="fas fa-location-crosshairs"></i></div>
+    <div>
+      <div class="flow-kicker">Step 03</div>
+      <div class="flow-title">Validate location behavior</div>
+      <div class="flow-copy">GPS accuracy, radius transitions, route behavior, and found-state are checked.</div>
+    </div>
+  </div>
+  <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+  <div class="flow-step">
+    <div class="flow-icon"><i class="fas fa-clipboard-check"></i></div>
+    <div>
+      <div class="flow-kicker">Step 04</div>
+      <div class="flow-title">Document & harden</div>
+      <div class="flow-copy">Findings become ClickUp issues, fixes, retests, and beta readiness decisions.</div>
+    </div>
+  </div>
+</div>
 </section>
 <!-- ============================================================
          SLIDE 5: CURRENT APP STATE + TESTING TOOLS
@@ -1997,7 +2292,7 @@ CUSTOMIZATION:
 <div class="orb orb-2"></div>
 <div class="slide-header" data-animate="">
 <div class="slide-label">Current App State</div>
-<div class="slide-title grad-blue">What We Can Demo Today</div>
+<div class="slide-title grad-blue">From Digital to Physical</div>
 <div class="slide-subtitle">The frontend is in a functional beta-readiness stage: core navigation works, testing category is visible, and location flows can be simulated end-to-end.</div>
 </div>
 <div class="visual-grid">
