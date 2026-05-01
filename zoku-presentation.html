@@ -1,0 +1,1465 @@
+<!--
+ZOKU ALL-HANDS PRESENTATION
+Created: May 1, 2026
+Event: Friday, May 1, 2026, 5:30 PM
+
+DEPLOYMENT INSTRUCTIONS:
+
+Option 1: Netlify Drop (Recommended - 10 seconds)
+1. Go to: https://app.netlify.com/drop
+2. Drag this HTML file into the browser window
+3. Netlify will give you an instant URL like: amazing-tesla-abc123.netlify.app
+4. Share that URL with your team
+5. Present from the URL in fullscreen (F11 or Fn+F)
+
+Option 2: GitHub Pages
+1. Create a new GitHub repo
+2. Upload this file as "index.html"
+3. Go to Settings → Pages → Enable Pages
+4. Your URL will be: yourusername.github.io/repo-name
+
+Option 3: Vercel
+1. Go to vercel.com
+2. Drag this file to deploy
+3. Instant URL provided
+
+Option 4: Share the file directly
+1. Zip the HTML file: zoku-presentation.zip
+2. Share via email/Slack
+3. Recipients: Unzip → Open in browser
+
+PRESENTING:
+- Open the URL or file in Chrome/Firefox/Safari
+- Press F11 (or Fn+F on Mac) for fullscreen
+- Use arrow keys ← → to navigate
+- Or drag/swipe left/right
+- Click dots at bottom to jump to slides
+- Press Esc to exit fullscreen
+
+CUSTOMIZATION:
+- Search for "[TBD]" to find all placeholder content
+- Replace placeholders with actual data
+- Adjust colors in CSS variables if needed
+- Add/remove slides by duplicating slide sections
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zoku All-Hands — May 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    /* ============================================================
+       CSS VARIABLES & RESET
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-primary: #0f0f1e;
+      --bg-secondary: #1a1a2e;
+      --bg-card: rgba(255, 255, 255, 0.05);
+
+      --gradient-purple: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-pink:   linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-blue:   linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --gradient-green:  linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      --gradient-sunset: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+      --gradient-ocean:  linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+      --gradient-soft:   linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+
+      --text-primary:   #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --text-tertiary:  rgba(255, 255, 255, 0.5);
+
+      --text-hero:     72px;
+      --text-title:    48px;
+      --text-subtitle: 32px;
+      --text-body:     20px;
+      --text-small:    16px;
+
+      --transition-slide: 600ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      background: var(--bg-primary);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--text-primary);
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    /* ============================================================
+       SLIDER CONTAINER
+    ============================================================ */
+    #slider {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      /* JS controls transform instead of scroll for precision */
+      will-change: transform;
+      transition: transform var(--transition-slide);
+    }
+
+    /* Disable transition during drag */
+    #slider.dragging { transition: none; }
+
+    /* ============================================================
+       INDIVIDUAL SLIDES
+    ============================================================ */
+    .slide {
+      flex: 0 0 100vw;
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 80px;
+      background: var(--bg-primary);
+    }
+
+    /* ============================================================
+       GLASSMORPHISM CARD
+    ============================================================ */
+    .glass-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      padding: 28px 32px;
+    }
+
+    /* ============================================================
+       AMBIENT BACKGROUND ORBS (shared helper)
+    ============================================================ */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.25;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ============================================================
+       PROGRESS BAR NAVIGATION
+    ============================================================ */
+    #progress-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+    }
+
+    #progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #667eea, #f093fb, #4facfe);
+      background-size: 200% 100%;
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 0 8px rgba(102, 126, 234, 0.6);
+    }
+
+    /* ============================================================
+       SLIDE NUMBER
+    ============================================================ */
+    #slide-counter {
+      position: fixed;
+      bottom: 14px;
+      right: 32px;
+      font-size: 12px;
+      color: var(--text-tertiary);
+      z-index: 100;
+      letter-spacing: 0.5px;
+      pointer-events: none;
+    }
+
+    /* ============================================================
+       UTILITY: GRADIENT TEXT
+    ============================================================ */
+    .grad-purple { background: var(--gradient-purple); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .grad-pink   { background: var(--gradient-pink);   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .grad-blue   { background: var(--gradient-blue);   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .grad-green  { background: var(--gradient-green);  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .grad-sunset { background: var(--gradient-sunset); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .grad-soft   { background: var(--gradient-soft);   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    /* ============================================================
+       SLIDE 1 — HERO
+    ============================================================ */
+    #slide-1 { background: radial-gradient(ellipse at 30% 50%, #1a1040 0%, var(--bg-primary) 60%); }
+
+    #slide-1 .orb-1 { width: 500px; height: 500px; background: #667eea; top: -100px; left: -150px; }
+    #slide-1 .orb-2 { width: 400px; height: 400px; background: #f093fb; bottom: -80px; right: -100px; }
+    #slide-1 .orb-3 { width: 300px; height: 300px; background: #4facfe; top: 50%; left: 60%; transform: translate(-50%,-50%); opacity: 0.12; }
+
+    .hero-content {
+      position: relative; z-index: 1;
+      text-align: center;
+      display: flex; flex-direction: column; align-items: center; gap: 20px;
+    }
+
+    .hero-logo {
+      font-size: 56px;
+      font-weight: 900;
+      letter-spacing: -2px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .hero-tagline {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+    }
+
+    .hero-divider {
+      width: 80px; height: 2px;
+      background: var(--gradient-purple);
+      border-radius: 2px;
+      margin: 4px 0;
+    }
+
+    .hero-title {
+      font-size: clamp(32px, 4vw, var(--text-title));
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.15;
+    }
+
+    .hero-meta {
+      display: flex; gap: 24px; align-items: center;
+      margin-top: 8px;
+    }
+
+    .hero-meta-item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: var(--text-small);
+      color: var(--text-secondary);
+    }
+
+    .hero-meta-item i { opacity: 0.6; }
+
+    .hero-badge {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 8px 22px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      letter-spacing: 0.3px;
+      margin-top: 12px;
+    }
+
+    /* ============================================================
+       SLIDE HEADER (shared)
+    ============================================================ */
+    .slide-header {
+      width: 100%;
+      margin-bottom: 40px;
+      position: relative; z-index: 1;
+    }
+
+    .slide-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 8px;
+    }
+
+    .slide-title {
+      font-size: clamp(28px, 3.5vw, var(--text-title));
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .slide-subtitle {
+      font-size: clamp(15px, 1.6vw, var(--text-body));
+      color: var(--text-secondary);
+      margin-top: 8px;
+      font-weight: 400;
+    }
+
+    /* ============================================================
+       SLIDE 2 — COMPANY UPDATES
+    ============================================================ */
+    #slide-2 { background: radial-gradient(ellipse at 70% 30%, #0d2040 0%, var(--bg-primary) 65%); }
+    #slide-2 .orb-1 { width: 450px; height: 450px; background: #4facfe; top: -120px; right: -100px; }
+    #slide-2 .orb-2 { width: 350px; height: 350px; background: #43e97b; bottom: -60px; left: -80px; opacity: 0.15; }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      width: 100%;
+      position: relative; z-index: 1;
+    }
+
+    .metric-card {
+      display: flex; flex-direction: column; align-items: flex-start; gap: 12px;
+    }
+
+    .metric-icon {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+    }
+
+    .metric-stat {
+      font-size: clamp(28px, 2.8vw, 42px);
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .metric-label {
+      font-size: 14px;
+      color: var(--text-secondary);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .metric-trend {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(67, 233, 123, 0.15);
+      color: #43e97b;
+      margin-top: 4px;
+    }
+
+    /* ============================================================
+       SLIDE 3 — KEY MILESTONES
+    ============================================================ */
+    #slide-3 { background: radial-gradient(ellipse at 20% 70%, #200d30 0%, var(--bg-primary) 60%); }
+    #slide-3 .orb-1 { width: 400px; height: 400px; background: #f093fb; bottom: -80px; left: -120px; }
+    #slide-3 .orb-2 { width: 300px; height: 300px; background: #667eea; top: -60px; right: -80px; opacity: 0.2; }
+
+    .milestones-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      width: 100%;
+      position: relative; z-index: 1;
+    }
+
+    .milestone-card {
+      display: flex; align-items: flex-start; gap: 18px;
+    }
+
+    .milestone-check {
+      flex-shrink: 0;
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+      margin-top: 2px;
+    }
+
+    .milestone-body { flex: 1; }
+
+    .milestone-title {
+      font-size: clamp(14px, 1.3vw, 18px);
+      font-weight: 700;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+
+    .milestone-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    .milestone-tag {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    /* ============================================================
+       SLIDE 4 — FRONTEND TEAM
+    ============================================================ */
+    #slide-4 { background: radial-gradient(ellipse at 80% 60%, #0f1f35 0%, var(--bg-primary) 65%); }
+    #slide-4 .orb-1 { width: 400px; height: 400px; background: #4facfe; top: -80px; right: -100px; opacity: 0.18; }
+    #slide-4 .orb-2 { width: 350px; height: 350px; background: #fa709a; bottom: -100px; left: -80px; opacity: 0.15; }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      width: 100%;
+      position: relative; z-index: 1;
+    }
+
+    .team-section-card {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+
+    .team-section-header {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .team-section-icon {
+      width: 34px; height: 34px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+
+    .team-section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .team-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+    .team-list li {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .team-list li::before {
+      content: '→';
+      color: var(--text-tertiary);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ============================================================
+       SLIDE 5 — TIMELINE & STATUS
+    ============================================================ */
+    #slide-5 { background: radial-gradient(ellipse at 50% 80%, #0a1f1a 0%, var(--bg-primary) 65%); }
+    #slide-5 .orb-1 { width: 450px; height: 450px; background: #38f9d7; bottom: -120px; right: -100px; opacity: 0.12; }
+    #slide-5 .orb-2 { width: 350px; height: 350px; background: #43e97b; top: -80px; left: -80px; opacity: 0.1; }
+
+    .status-grid {
+      display: flex; flex-direction: column; gap: 16px;
+      width: 100%;
+      position: relative; z-index: 1;
+    }
+
+    .status-row {
+      display: flex; align-items: center; gap: 20px;
+      padding: 18px 24px;
+    }
+
+    .status-team-name {
+      width: 130px;
+      flex-shrink: 0;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .status-badge {
+      flex-shrink: 0;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 999px;
+      letter-spacing: 0.3px;
+    }
+
+    .badge-progress { background: rgba(79, 172, 254, 0.2); color: #4facfe; }
+    .badge-complete { background: rgba(67, 233, 123, 0.2); color: #43e97b; }
+    .badge-planned  { background: rgba(255,255,255,0.1);   color: var(--text-secondary); }
+
+    .progress-wrap { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+
+    .progress-label {
+      display: flex; justify-content: space-between;
+      font-size: 12px; color: var(--text-tertiary);
+    }
+
+    .progress-track {
+      height: 6px; border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%; border-radius: 999px;
+      width: 0%; /* animated via JS */
+      transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .status-note {
+      flex: 1.2;
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Quarter timeline */
+    .quarter-timeline {
+      display: flex; align-items: center; gap: 0;
+      width: 100%; margin-top: 8px;
+      position: relative; z-index: 1;
+    }
+
+    .quarter-item {
+      flex: 1; text-align: center; padding: 12px 8px;
+      border-radius: 12px;
+    }
+
+    .quarter-label {
+      font-size: 12px; font-weight: 700;
+      color: var(--text-secondary); letter-spacing: 1px; text-transform: uppercase;
+    }
+
+    .quarter-sub {
+      font-size: 11px; color: var(--text-tertiary); margin-top: 4px;
+    }
+
+    .quarter-active {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .quarter-connector {
+      width: 24px; height: 2px;
+      background: rgba(255,255,255,0.12);
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       SLIDE 6 — NEXT STEPS
+    ============================================================ */
+    #slide-6 { background: radial-gradient(ellipse at 30% 20%, #200a20 0%, var(--bg-primary) 65%); }
+    #slide-6 .orb-1 { width: 500px; height: 500px; background: #fa709a; top: -150px; left: -150px; opacity: 0.18; }
+    #slide-6 .orb-2 { width: 300px; height: 300px; background: #fee140; bottom: -80px; right: -80px; opacity: 0.12; }
+
+    .priorities-list {
+      display: flex; flex-direction: column; gap: 14px;
+      width: 100%; max-width: 860px;
+      position: relative; z-index: 1;
+    }
+
+    .priority-item {
+      display: flex; align-items: center; gap: 20px;
+      padding: 18px 24px;
+    }
+
+    .priority-num {
+      flex-shrink: 0;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 800;
+    }
+
+    .priority-body { flex: 1; }
+
+    .priority-title {
+      font-size: clamp(14px, 1.3vw, 17px);
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+
+    .priority-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .priority-arrow {
+      flex-shrink: 0;
+      font-size: 16px;
+      color: var(--text-tertiary);
+    }
+
+    .target-banner {
+      margin-top: 20px;
+      padding: 16px 28px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(250,112,154,0.15) 0%, rgba(254,225,64,0.1) 100%);
+      border: 1px solid rgba(250,112,154,0.25);
+      display: flex; align-items: center; gap: 14px;
+      position: relative; z-index: 1;
+    }
+
+    .target-banner i { font-size: 20px; opacity: 0.9; }
+
+    .target-banner-text { font-size: 14px; color: var(--text-secondary); }
+    .target-banner-text strong { color: var(--text-primary); font-weight: 700; }
+
+    /* ============================================================
+       SLIDE 7 — TEAM & CLOSING
+    ============================================================ */
+    #slide-7 { background: radial-gradient(ellipse at 60% 40%, #0a1530 0%, var(--bg-primary) 65%); }
+    #slide-7 .orb-1 { width: 500px; height: 500px; background: #667eea; top: -120px; right: -120px; opacity: 0.2; }
+    #slide-7 .orb-2 { width: 350px; height: 350px; background: #f093fb; bottom: -80px; left: -80px; opacity: 0.15; }
+
+    .team-members-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+      width: 100%;
+      position: relative; z-index: 1;
+      margin-bottom: 20px;
+    }
+
+    .member-card {
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      padding: 20px 14px;
+      text-align: center;
+    }
+
+    .member-avatar {
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; font-weight: 800;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .member-name {
+      font-size: 13px; font-weight: 700;
+      color: var(--text-primary); line-height: 1.3;
+    }
+
+    .member-role {
+      font-size: 11px; color: var(--text-tertiary); line-height: 1.3;
+    }
+
+    .closing-section {
+      display: flex; flex-direction: column; align-items: center; gap: 14px;
+      position: relative; z-index: 1;
+    }
+
+    .closing-message {
+      font-size: clamp(24px, 3vw, 38px);
+      font-weight: 800;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .shoutout-banner {
+      padding: 12px 24px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      font-size: 13px;
+      color: var(--text-secondary);
+      text-align: center;
+      max-width: 600px;
+    }
+
+    .footer-text {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      letter-spacing: 1px;
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    /* ============================================================
+       REDUCED MOTION
+    ============================================================ */
+    @media (prefers-reduced-motion: reduce) {
+      #slider { transition: none !important; }
+      .progress-bar { transition: none !important; }
+    }
+
+    /* ============================================================
+       RESPONSIVE — TABLET
+    ============================================================ */
+    @media (max-width: 1024px) {
+      .slide { padding: 40px 40px; }
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .team-members-grid { grid-template-columns: repeat(3, 1fr); }
+      :root {
+        --text-hero: 58px;
+        --text-title: 38px;
+        --text-subtitle: 26px;
+        --text-body: 17px;
+      }
+    }
+
+    /* ============================================================
+       RESPONSIVE — MOBILE
+    ============================================================ */
+    @media (max-width: 768px) {
+      .slide { padding: 28px 20px; }
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .milestones-grid { grid-template-columns: 1fr; }
+      .team-grid { grid-template-columns: 1fr; }
+      .team-members-grid { grid-template-columns: repeat(2, 1fr); }
+      #progress-nav { height: 2px; }
+      :root {
+        --text-hero: 44px;
+        --text-title: 30px;
+        --text-subtitle: 20px;
+        --text-body: 15px;
+        --text-small: 13px;
+      }
+      .status-row { flex-wrap: wrap; gap: 10px; }
+      .status-team-name { width: 100%; }
+      .status-note { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       SLIDER
+  ============================================================ -->
+  <div id="slider" role="region" aria-label="Presentation slides">
+
+    <!-- ============================================================
+         SLIDE 1: HERO
+    ============================================================ -->
+    <section class="slide" id="slide-1" aria-label="Opening slide">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+
+      <div class="hero-content">
+        <div data-animate>
+          <div class="hero-logo grad-purple">Zoku</div>
+          <div class="hero-tagline">Building the future, together</div>
+        </div>
+
+        <div class="hero-divider" data-animate></div>
+
+        <div data-animate>
+          <div class="hero-title">All-Hands Meeting</div>
+        </div>
+
+        <div class="hero-meta" data-animate>
+          <div class="hero-meta-item">
+            <i class="fas fa-calendar"></i>
+            <span>Friday, May 1, 2026</span>
+          </div>
+          <div class="hero-meta-item">
+            <i class="fas fa-clock"></i>
+            <span>5:30 PM</span>
+          </div>
+        </div>
+
+        <div class="hero-badge" data-animate>
+          Use ← → arrow keys or drag to navigate
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 2: COMPANY UPDATES
+    ============================================================ -->
+    <section class="slide" id="slide-2" aria-label="Company updates">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+
+      <div class="slide-header" data-animate>
+        <div class="slide-label">Overview</div>
+        <div class="slide-title grad-blue">Company Updates</div>
+        <div class="slide-subtitle">Where Zoku stands today</div>
+      </div>
+
+      <div class="metrics-grid">
+        <div class="glass-card metric-card" data-animate>
+          <div class="metric-icon" style="background: linear-gradient(135deg, rgba(102,126,234,0.25), rgba(118,75,162,0.25));">
+            <i class="fas fa-chart-line grad-purple"></i>
+          </div>
+          <div class="metric-stat grad-purple">[TBD]</div>
+          <div class="metric-label">[TBD — Overall progress metric]</div>
+          <div class="metric-trend">↑ [TBD]%</div>
+        </div>
+
+        <div class="glass-card metric-card" data-animate>
+          <div class="metric-icon" style="background: linear-gradient(135deg, rgba(79,172,254,0.25), rgba(0,242,254,0.25));">
+            <i class="fas fa-rocket grad-blue"></i>
+          </div>
+          <div class="metric-stat grad-blue">[TBD]</div>
+          <div class="metric-label">[TBD — Growth / traction metric]</div>
+          <div class="metric-trend">↑ [TBD]%</div>
+        </div>
+
+        <div class="glass-card metric-card" data-animate>
+          <div class="metric-icon" style="background: linear-gradient(135deg, rgba(240,147,251,0.25), rgba(245,87,108,0.25));">
+            <i class="fas fa-layer-group grad-pink"></i>
+          </div>
+          <div class="metric-stat grad-pink">[TBD]</div>
+          <div class="metric-label">[TBD — Platform status]</div>
+          <div class="metric-trend">↑ [TBD]%</div>
+        </div>
+
+        <div class="glass-card metric-card" data-animate>
+          <div class="metric-icon" style="background: linear-gradient(135deg, rgba(67,233,123,0.25), rgba(56,249,215,0.25));">
+            <i class="fas fa-users grad-green"></i>
+          </div>
+          <div class="metric-stat grad-green">[TBD]</div>
+          <div class="metric-label">[TBD — User engagement]</div>
+          <div class="metric-trend">↑ [TBD]%</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 3: KEY MILESTONES
+    ============================================================ -->
+    <section class="slide" id="slide-3" aria-label="Key milestones">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+
+      <div class="slide-header" data-animate>
+        <div class="slide-label">Achievements</div>
+        <div class="slide-title grad-pink">Key Milestones</div>
+        <div class="slide-subtitle">What we've achieved</div>
+      </div>
+
+      <div class="milestones-grid">
+        <div class="glass-card milestone-card" data-animate>
+          <div class="milestone-check" style="background: linear-gradient(135deg, rgba(102,126,234,0.3), rgba(118,75,162,0.3));">
+            <i class="fas fa-check grad-purple"></i>
+          </div>
+          <div class="milestone-body">
+            <div class="milestone-title">[TBD — Major milestone 1]</div>
+            <div class="milestone-desc">[TBD — Description of what was accomplished and why it matters]</div>
+            <div class="milestone-tag" style="background: rgba(102,126,234,0.15); color: #a78bfa;">Q1 2026</div>
+          </div>
+        </div>
+
+        <div class="glass-card milestone-card" data-animate>
+          <div class="milestone-check" style="background: linear-gradient(135deg, rgba(79,172,254,0.3), rgba(0,242,254,0.3));">
+            <i class="fas fa-check grad-blue"></i>
+          </div>
+          <div class="milestone-body">
+            <div class="milestone-title">[TBD — Major milestone 2]</div>
+            <div class="milestone-desc">[TBD — Description of what was accomplished and why it matters]</div>
+            <div class="milestone-tag" style="background: rgba(79,172,254,0.15); color: #4facfe;">Q1 2026</div>
+          </div>
+        </div>
+
+        <div class="glass-card milestone-card" data-animate>
+          <div class="milestone-check" style="background: linear-gradient(135deg, rgba(240,147,251,0.3), rgba(245,87,108,0.3));">
+            <i class="fas fa-check grad-pink"></i>
+          </div>
+          <div class="milestone-body">
+            <div class="milestone-title">[TBD — Major milestone 3]</div>
+            <div class="milestone-desc">[TBD — Description of what was accomplished and why it matters]</div>
+            <div class="milestone-tag" style="background: rgba(240,147,251,0.15); color: #f093fb;">Q2 2026</div>
+          </div>
+        </div>
+
+        <div class="glass-card milestone-card" data-animate>
+          <div class="milestone-check" style="background: linear-gradient(135deg, rgba(67,233,123,0.3), rgba(56,249,215,0.3));">
+            <i class="fas fa-check grad-green"></i>
+          </div>
+          <div class="milestone-body">
+            <div class="milestone-title">[TBD — Major milestone 4]</div>
+            <div class="milestone-desc">[TBD — Description of what was accomplished and why it matters]</div>
+            <div class="milestone-tag" style="background: rgba(67,233,123,0.15); color: #43e97b;">Q2 2026</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 4: FRONTEND TEAM UPDATE
+    ============================================================ -->
+    <section class="slide" id="slide-4" aria-label="Frontend team update">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+
+      <div class="slide-header" data-animate>
+        <div class="slide-label">Team Spotlight</div>
+        <div class="slide-title grad-blue">Frontend Team Update</div>
+        <div class="slide-subtitle">What we've been building</div>
+      </div>
+
+      <div class="team-grid">
+        <!-- What we worked on -->
+        <div class="glass-card team-section-card" data-animate>
+          <div class="team-section-header">
+            <div class="team-section-icon" style="background: linear-gradient(135deg, rgba(79,172,254,0.25), rgba(0,242,254,0.25));">
+              <i class="fas fa-code" style="color: #4facfe;"></i>
+            </div>
+            <div class="team-section-title">What we worked on</div>
+          </div>
+          <ul class="team-list">
+            <li>[TBD — Feature / project 1]</li>
+            <li>[TBD — Feature / project 2]</li>
+            <li>[TBD — Feature / project 3]</li>
+          </ul>
+        </div>
+
+        <!-- Key accomplishments -->
+        <div class="glass-card team-section-card" data-animate>
+          <div class="team-section-header">
+            <div class="team-section-icon" style="background: linear-gradient(135deg, rgba(67,233,123,0.25), rgba(56,249,215,0.25));">
+              <i class="fas fa-trophy" style="color: #43e97b;"></i>
+            </div>
+            <div class="team-section-title">Key accomplishments</div>
+          </div>
+          <ul class="team-list">
+            <li>[TBD — Win 1]</li>
+            <li>[TBD — Win 2]</li>
+          </ul>
+        </div>
+
+        <!-- Current projects -->
+        <div class="glass-card team-section-card" data-animate>
+          <div class="team-section-header">
+            <div class="team-section-icon" style="background: linear-gradient(135deg, rgba(240,147,251,0.25), rgba(245,87,108,0.25));">
+              <i class="fas fa-spinner" style="color: #f093fb;"></i>
+            </div>
+            <div class="team-section-title">Current projects</div>
+          </div>
+          <ul class="team-list">
+            <li>[TBD — Ongoing work 1]</li>
+            <li>[TBD — Ongoing work 2]</li>
+          </ul>
+        </div>
+
+        <!-- Timeline & goals -->
+        <div class="glass-card team-section-card" data-animate>
+          <div class="team-section-header">
+            <div class="team-section-icon" style="background: linear-gradient(135deg, rgba(250,112,154,0.25), rgba(254,225,64,0.25));">
+              <i class="fas fa-flag-checkered" style="color: #fa709a;"></i>
+            </div>
+            <div class="team-section-title">Timeline &amp; goals</div>
+          </div>
+          <ul class="team-list">
+            <li>[TBD — Next sprint goal]</li>
+            <li>[TBD — Month goal]</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 5: TIMELINE & STATUS
+    ============================================================ -->
+    <section class="slide" id="slide-5" aria-label="Timeline and project status">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+
+      <div class="slide-header" data-animate>
+        <div class="slide-label">Progress</div>
+        <div class="slide-title grad-green">Timeline &amp; Project Status</div>
+        <div class="slide-subtitle">Current status across all teams</div>
+      </div>
+
+      <div class="status-grid">
+        <!-- Backend -->
+        <div class="glass-card status-row" data-animate>
+          <div class="status-team-name"><i class="fas fa-server" style="margin-right:8px; opacity:0.6;"></i>Backend</div>
+          <div class="status-badge badge-progress">In Progress</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>[TBD — Status]</span><span data-pct="0">[TBD]%</span></div>
+            <div class="progress-track"><div class="progress-bar" data-target="65" style="background: var(--gradient-blue);"></div></div>
+          </div>
+          <div class="status-note">[TBD — Backend team status/progress details]</div>
+        </div>
+
+        <!-- Frontend -->
+        <div class="glass-card status-row" data-animate>
+          <div class="status-team-name"><i class="fas fa-palette" style="margin-right:8px; opacity:0.6;"></i>Frontend</div>
+          <div class="status-badge badge-progress">In Progress</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>[TBD — Status]</span><span data-pct="0">[TBD]%</span></div>
+            <div class="progress-track"><div class="progress-bar" data-target="70" style="background: var(--gradient-purple);"></div></div>
+          </div>
+          <div class="status-note">[TBD — Frontend team status/progress details]</div>
+        </div>
+
+        <!-- Design -->
+        <div class="glass-card status-row" data-animate>
+          <div class="status-team-name"><i class="fas fa-pen-nib" style="margin-right:8px; opacity:0.6;"></i>Design</div>
+          <div class="status-badge badge-complete">Completed</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>[TBD — Status]</span><span data-pct="0">[TBD]%</span></div>
+            <div class="progress-track"><div class="progress-bar" data-target="90" style="background: var(--gradient-pink);"></div></div>
+          </div>
+          <div class="status-note">[TBD — Design team status/progress details]</div>
+        </div>
+
+        <!-- Mobile -->
+        <div class="glass-card status-row" data-animate>
+          <div class="status-team-name"><i class="fas fa-mobile-alt" style="margin-right:8px; opacity:0.6;"></i>Mobile</div>
+          <div class="status-badge badge-planned">Planned</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>[TBD — Status]</span><span data-pct="0">[TBD]%</span></div>
+            <div class="progress-track"><div class="progress-bar" data-target="30" style="background: var(--gradient-green);"></div></div>
+          </div>
+          <div class="status-note">[TBD — Mobile team status/progress details]</div>
+        </div>
+      </div>
+
+      <!-- Quarter timeline -->
+      <div class="quarter-timeline" data-animate>
+        <div class="quarter-item quarter-active">
+          <div class="quarter-label">Q2 2026</div>
+          <div class="quarter-sub">Now • Foundation</div>
+        </div>
+        <div class="quarter-connector"></div>
+        <div class="quarter-item">
+          <div class="quarter-label">Q3 2026</div>
+          <div class="quarter-sub">V2 Beta</div>
+        </div>
+        <div class="quarter-connector"></div>
+        <div class="quarter-item">
+          <div class="quarter-label">Q4 2026</div>
+          <div class="quarter-sub">V2 Launch</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 6: NEXT STEPS
+    ============================================================ -->
+    <section class="slide" id="slide-6" aria-label="Next steps">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+
+      <div class="slide-header" data-animate>
+        <div class="slide-label">Looking Ahead</div>
+        <div class="slide-title grad-sunset">Next Steps</div>
+        <div class="slide-subtitle">Priorities for V2</div>
+      </div>
+
+      <div class="priorities-list">
+        <div class="glass-card priority-item" data-animate>
+          <div class="priority-num" style="background: linear-gradient(135deg, rgba(250,112,154,0.3), rgba(254,225,64,0.3)); color: #fa709a;">1</div>
+          <div class="priority-body">
+            <div class="priority-title">[TBD — Priority 1]</div>
+            <div class="priority-desc">[TBD — Description of this priority and why it matters for V2]</div>
+          </div>
+          <div class="priority-arrow"><i class="fas fa-chevron-right"></i></div>
+        </div>
+
+        <div class="glass-card priority-item" data-animate>
+          <div class="priority-num" style="background: linear-gradient(135deg, rgba(102,126,234,0.3), rgba(118,75,162,0.3)); color: #667eea;">2</div>
+          <div class="priority-body">
+            <div class="priority-title">[TBD — Priority 2]</div>
+            <div class="priority-desc">[TBD — Description of this priority and why it matters for V2]</div>
+          </div>
+          <div class="priority-arrow"><i class="fas fa-chevron-right"></i></div>
+        </div>
+
+        <div class="glass-card priority-item" data-animate>
+          <div class="priority-num" style="background: linear-gradient(135deg, rgba(79,172,254,0.3), rgba(0,242,254,0.3)); color: #4facfe;">3</div>
+          <div class="priority-body">
+            <div class="priority-title">[TBD — Priority 3]</div>
+            <div class="priority-desc">[TBD — Description of this priority and why it matters for V2]</div>
+          </div>
+          <div class="priority-arrow"><i class="fas fa-chevron-right"></i></div>
+        </div>
+
+        <div class="glass-card priority-item" data-animate>
+          <div class="priority-num" style="background: linear-gradient(135deg, rgba(67,233,123,0.3), rgba(56,249,215,0.3)); color: #43e97b;">4</div>
+          <div class="priority-body">
+            <div class="priority-title">[TBD — Priority 4]</div>
+            <div class="priority-desc">[TBD — Description of this priority and why it matters for V2]</div>
+          </div>
+          <div class="priority-arrow"><i class="fas fa-chevron-right"></i></div>
+        </div>
+      </div>
+
+      <div class="target-banner" data-animate>
+        <i class="fas fa-flag grad-sunset"></i>
+        <div class="target-banner-text">
+          Target: <strong>V2 Launch — [TBD — Target date]</strong> &nbsp;·&nbsp; Let's build something great.
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 7: TEAM & CLOSING
+    ============================================================ -->
+    <section class="slide" id="slide-7" aria-label="Team and closing">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+
+      <div class="slide-header" data-animate style="margin-bottom: 24px;">
+        <div class="slide-label">The People</div>
+        <div class="slide-title grad-purple">The Team</div>
+      </div>
+
+      <!-- Team member grid — 5 placeholders, duplicate/remove as needed -->
+      <div class="team-members-grid">
+        <div class="glass-card member-card" data-animate>
+          <div class="member-avatar" style="background: var(--gradient-purple);">[?]</div>
+          <div class="member-name">[Team Member Name]</div>
+          <div class="member-role">[Role]</div>
+        </div>
+        <div class="glass-card member-card" data-animate>
+          <div class="member-avatar" style="background: var(--gradient-blue);">[?]</div>
+          <div class="member-name">[Team Member Name]</div>
+          <div class="member-role">[Role]</div>
+        </div>
+        <div class="glass-card member-card" data-animate>
+          <div class="member-avatar" style="background: var(--gradient-pink);">[?]</div>
+          <div class="member-name">[Team Member Name]</div>
+          <div class="member-role">[Role]</div>
+        </div>
+        <div class="glass-card member-card" data-animate>
+          <div class="member-avatar" style="background: var(--gradient-green);">[?]</div>
+          <div class="member-name">[Team Member Name]</div>
+          <div class="member-role">[Role]</div>
+        </div>
+        <div class="glass-card member-card" data-animate>
+          <div class="member-avatar" style="background: var(--gradient-sunset);">[?]</div>
+          <div class="member-name">[Team Member Name]</div>
+          <div class="member-role">[Role]</div>
+        </div>
+      </div>
+
+      <!-- Shoutouts -->
+      <div class="shoutout-banner" data-animate>
+        <i class="fas fa-star" style="color: #fee140; margin-right: 8px;"></i>
+        <strong>Shoutout:</strong> [TBD — Recognition / kudos for team members]
+      </div>
+
+      <!-- Closing -->
+      <div class="closing-section" data-animate>
+        <div class="closing-message grad-purple">Let's build Zoku V2!</div>
+        <div class="footer-text">Thank you &nbsp;·&nbsp; Zoku Team &nbsp;·&nbsp; May 2026</div>
+      </div>
+    </section>
+
+  </div><!-- /#slider -->
+
+  <!-- ============================================================
+       PROGRESS BAR NAVIGATION
+  ============================================================ -->
+  <div id="progress-nav" aria-label="Slide progress" role="progressbar" aria-valuemin="1" aria-valuemax="7" aria-valuenow="1">
+    <div id="progress-fill"></div>
+  </div>
+
+  <!-- Slide counter -->
+  <div id="slide-counter" aria-live="polite"></div>
+
+  <!-- ============================================================
+       GSAP
+  ============================================================ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <script>
+    /* ============================================================
+       SLIDER STATE
+    ============================================================ */
+    const SLIDE_COUNT = 7;
+    let currentSlide = 0;
+    let prevSlide = -1;
+
+    const slider       = document.getElementById('slider');
+    const progressFill = document.getElementById('progress-fill');
+    const progressNav  = document.getElementById('progress-nav');
+    const counter      = document.getElementById('slide-counter');
+
+    /* Click anywhere on the bar to jump to that slide */
+    progressNav.addEventListener('click', e => {
+      const pct = e.clientX / window.innerWidth;
+      goToSlide(Math.floor(pct * SLIDE_COUNT));
+    });
+
+    function updateProgress(idx) {
+      const pct = ((idx + 1) / SLIDE_COUNT) * 100;
+      progressFill.style.width = pct + '%';
+      progressNav.setAttribute('aria-valuenow', idx + 1);
+      counter.textContent = `${idx + 1} / ${SLIDE_COUNT}`;
+    }
+
+    /* ============================================================
+       SLIDE NAVIGATION
+    ============================================================ */
+    function goToSlide(idx) {
+      idx = Math.max(0, Math.min(SLIDE_COUNT - 1, idx));
+      slider.style.transform = `translateX(${-idx * 100}vw)`;
+      prevSlide = currentSlide;
+      currentSlide = idx;
+      updateProgress(idx);
+      triggerSlideAnimations(idx, prevSlide);
+    }
+
+    /* ============================================================
+       PER-SLIDE ENTRY ANIMATIONS
+    ============================================================ */
+
+    /* Reset all [data-animate] elements in a slide before re-animating */
+    function resetAnimatables(slide) {
+      gsap.set(slide.querySelectorAll('[data-animate]'), { clearProps: 'all' });
+    }
+
+    function animateProgressBars(slide) {
+      slide.querySelectorAll('.progress-bar').forEach(bar => {
+        gsap.fromTo(bar, { width: '0%' }, {
+          width: (bar.dataset.target || 0) + '%',
+          duration: 1.2, ease: 'power2.out', delay: 0.5
+        });
+      });
+    }
+
+    /* Each entry has a distinct personality */
+    const slideAnimations = [
+
+      /* Slide 1 — Hero: scale + fade from center, spring bounce */
+      (slide) => {
+        const els = slide.querySelectorAll('[data-animate]');
+        gsap.fromTo(els,
+          { opacity: 0, scale: 0.82, y: 24 },
+          { opacity: 1, scale: 1, y: 0, duration: 0.75, stagger: 0.13,
+            ease: 'back.out(1.5)', clearProps: 'all' }
+        );
+      },
+
+      /* Slide 2 — Company Updates: header sweeps left, cards fly up */
+      (slide) => {
+        const header = slide.querySelector('.slide-header');
+        const cards  = slide.querySelectorAll('.glass-card');
+        gsap.fromTo(header,
+          { opacity: 0, x: -70 },
+          { opacity: 1, x: 0, duration: 0.55, ease: 'power3.out', clearProps: 'all' }
+        );
+        gsap.fromTo(cards,
+          { opacity: 0, y: 70 },
+          { opacity: 1, y: 0, duration: 0.6, stagger: 0.1,
+            ease: 'power3.out', delay: 0.18, clearProps: 'all' }
+        );
+      },
+
+      /* Slide 3 — Milestones: cards alternate slide in from left / right */
+      (slide) => {
+        const header = slide.querySelector('.slide-header');
+        const cards  = slide.querySelectorAll('.glass-card');
+        gsap.fromTo(header,
+          { opacity: 0, y: -28 },
+          { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', clearProps: 'all' }
+        );
+        cards.forEach((card, i) => {
+          gsap.fromTo(card,
+            { opacity: 0, x: i % 2 === 0 ? -90 : 90 },
+            { opacity: 1, x: 0, duration: 0.65, ease: 'power3.out',
+              delay: 0.18 + i * 0.11, clearProps: 'all' }
+          );
+        });
+      },
+
+      /* Slide 4 — Frontend Team: header from left, cards drop from top with tilt */
+      (slide) => {
+        const header = slide.querySelector('.slide-header');
+        const cards  = slide.querySelectorAll('.glass-card');
+        gsap.fromTo(header,
+          { opacity: 0, x: -55 },
+          { opacity: 1, x: 0, duration: 0.5, ease: 'power3.out', clearProps: 'all' }
+        );
+        gsap.fromTo(cards,
+          { opacity: 0, y: -50, rotationX: 18, transformOrigin: 'top center' },
+          { opacity: 1, y: 0, rotationX: 0, duration: 0.6, stagger: 0.1,
+            ease: 'power2.out', delay: 0.2, clearProps: 'all' }
+        );
+      },
+
+      /* Slide 5 — Timeline: rows cascade from left, then bars fill */
+      (slide) => {
+        const header   = slide.querySelector('.slide-header');
+        const rows     = slide.querySelectorAll('.status-row');
+        const timeline = slide.querySelector('.quarter-timeline');
+        gsap.fromTo(header,
+          { opacity: 0, y: -20 },
+          { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out', clearProps: 'all' }
+        );
+        gsap.fromTo(rows,
+          { opacity: 0, x: -80 },
+          { opacity: 1, x: 0, duration: 0.6, stagger: 0.1,
+            ease: 'power3.out', delay: 0.2, clearProps: 'all' }
+        );
+        if (timeline) {
+          gsap.fromTo(timeline,
+            { opacity: 0, y: 30 },
+            { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out',
+              delay: 0.75, clearProps: 'all' }
+          );
+        }
+        animateProgressBars(slide);
+      },
+
+      /* Slide 6 — Next Steps: header + items streak in from the right */
+      (slide) => {
+        const header  = slide.querySelector('.slide-header');
+        const items   = slide.querySelectorAll('.priority-item');
+        const banner  = slide.querySelector('.target-banner');
+        gsap.fromTo(header,
+          { opacity: 0, x: 60 },
+          { opacity: 1, x: 0, duration: 0.5, ease: 'power3.out', clearProps: 'all' }
+        );
+        gsap.fromTo(items,
+          { opacity: 0, x: 90 },
+          { opacity: 1, x: 0, duration: 0.6, stagger: 0.1,
+            ease: 'power3.out', delay: 0.2, clearProps: 'all' }
+        );
+        if (banner) {
+          gsap.fromTo(banner,
+            { opacity: 0, y: 22 },
+            { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out',
+              delay: 0.75, clearProps: 'all' }
+          );
+        }
+      },
+
+      /* Slide 7 — Team: members scale+bounce in grid, closing text elastic pop */
+      (slide) => {
+        const header   = slide.querySelector('.slide-header');
+        const members  = slide.querySelectorAll('.member-card');
+        const shoutout = slide.querySelector('.shoutout-banner');
+        const closing  = slide.querySelector('.closing-section');
+        gsap.fromTo(header,
+          { opacity: 0, y: -22 },
+          { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out', clearProps: 'all' }
+        );
+        gsap.fromTo(members,
+          { opacity: 0, scale: 0.65, y: 28 },
+          { opacity: 1, scale: 1, y: 0, duration: 0.55, stagger: 0.07,
+            ease: 'back.out(1.8)', delay: 0.2, clearProps: 'all' }
+        );
+        if (shoutout) {
+          gsap.fromTo(shoutout,
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out',
+              delay: 0.65, clearProps: 'all' }
+          );
+        }
+        if (closing) {
+          gsap.fromTo(closing,
+            { opacity: 0, scale: 0.9 },
+            { opacity: 1, scale: 1, duration: 0.7, ease: 'elastic.out(1, 0.55)',
+              delay: 0.85, clearProps: 'all' }
+          );
+        }
+      }
+    ];
+
+    function triggerSlideAnimations(idx) {
+      const slide = document.querySelectorAll('.slide')[idx];
+      resetAnimatables(slide);
+      if (slideAnimations[idx]) slideAnimations[idx](slide);
+    }
+
+    /* ============================================================
+       KEYBOARD NAVIGATION
+    ============================================================ */
+    document.addEventListener('keydown', e => {
+      switch (e.key) {
+        case 'ArrowRight': goToSlide(currentSlide + 1); break;
+        case 'ArrowLeft':  goToSlide(currentSlide - 1); break;
+        case 'Home':       goToSlide(0);               break;
+        case 'End':        goToSlide(SLIDE_COUNT - 1); break;
+        case 'Escape':
+          if (document.fullscreenElement) document.exitFullscreen();
+          break;
+      }
+    });
+
+    /* ============================================================
+       DRAG NAVIGATION (MOUSE)
+    ============================================================ */
+    let dragStartX = 0;
+    let dragCurrentX = 0;
+    let isDragging = false;
+    const DRAG_THRESHOLD = 60;
+
+    slider.addEventListener('mousedown', e => {
+      isDragging = true;
+      dragStartX = e.clientX;
+      dragCurrentX = e.clientX;
+      slider.classList.add('dragging');
+      slider.style.cursor = 'grabbing';
+    });
+
+    window.addEventListener('mousemove', e => {
+      if (!isDragging) return;
+      dragCurrentX = e.clientX;
+      const delta = dragCurrentX - dragStartX;
+      const base = -currentSlide * window.innerWidth;
+      slider.style.transform = `translateX(${base + delta}px)`;
+    });
+
+    window.addEventListener('mouseup', e => {
+      if (!isDragging) return;
+      isDragging = false;
+      slider.classList.remove('dragging');
+      slider.style.cursor = '';
+      const delta = e.clientX - dragStartX;
+      if (delta < -DRAG_THRESHOLD)     goToSlide(currentSlide + 1);
+      else if (delta > DRAG_THRESHOLD) goToSlide(currentSlide - 1);
+      else                             goToSlide(currentSlide);
+    });
+
+    /* ============================================================
+       SWIPE NAVIGATION (TOUCH)
+    ============================================================ */
+    let touchStartX = 0;
+    let touchCurrentX = 0;
+
+    slider.addEventListener('touchstart', e => {
+      touchStartX = e.touches[0].clientX;
+      touchCurrentX = touchStartX;
+      slider.classList.add('dragging');
+    }, { passive: true });
+
+    slider.addEventListener('touchmove', e => {
+      touchCurrentX = e.touches[0].clientX;
+      const delta = touchCurrentX - touchStartX;
+      const base = -currentSlide * window.innerWidth;
+      slider.style.transform = `translateX(${base + delta}px)`;
+    }, { passive: true });
+
+    slider.addEventListener('touchend', () => {
+      slider.classList.remove('dragging');
+      const delta = touchCurrentX - touchStartX;
+      if (delta < -DRAG_THRESHOLD)     goToSlide(currentSlide + 1);
+      else if (delta > DRAG_THRESHOLD) goToSlide(currentSlide - 1);
+      else                             goToSlide(currentSlide);
+    });
+
+    /* ============================================================
+       RESIZE HANDLER
+    ============================================================ */
+    window.addEventListener('resize', () => {
+      slider.classList.add('dragging');
+      slider.style.transform = `translateX(${-currentSlide * 100}vw)`;
+      slider.getBoundingClientRect();
+      slider.classList.remove('dragging');
+    });
+
+    /* ============================================================
+       INIT
+    ============================================================ */
+    updateProgress(0);
+    triggerSlideAnimations(0);
+  </script>
+</body>
+</html>
